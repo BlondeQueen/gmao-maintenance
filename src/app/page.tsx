@@ -35,12 +35,13 @@ export default function Home() {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex flex-col lg:flex-row min-h-screen bg-gray-50">
       <Navigation 
         activeSection={activeSection} 
         onSectionChange={setActiveSection} 
       />
       <main className="flex-1 overflow-auto">
+        <div className="lg:hidden h-4"></div> {/* Espace pour le header mobile */}
         {renderContent()}
       </main>
     </div>

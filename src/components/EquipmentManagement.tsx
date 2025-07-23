@@ -75,27 +75,27 @@ export default function EquipmentManagement() {
     const StatusIcon = statusInfo.icon;
 
     return (
-      <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-gray-900">{equipment.name}</h3>
-          <div className={`flex items-center px-3 py-1 rounded-full text-sm font-medium ${statusInfo.color}`}>
-            <StatusIcon className="h-4 w-4 mr-1" />
-            {statusInfo.label}
+      <div className="bg-white rounded-lg shadow-md p-4 md:p-6 hover:shadow-lg transition-shadow">
+        <div className="flex items-start justify-between mb-4">
+          <h3 className="text-base md:text-lg font-semibold text-gray-900 truncate flex-1">{equipment.name}</h3>
+          <div className={`flex items-center px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-medium ml-2 flex-shrink-0 ${statusInfo.color}`}>
+            <StatusIcon className="h-3 w-3 md:h-4 md:w-4 mr-1" />
+            <span className="hidden sm:inline">{statusInfo.label}</span>
           </div>
         </div>
 
         <div className="space-y-2 mb-4">
-          <div className="flex items-center text-sm text-gray-600">
-            <MapPin className="h-4 w-4 mr-2" />
-            {equipment.location}
+          <div className="flex items-center text-xs md:text-sm text-gray-600">
+            <MapPin className="h-3 w-3 md:h-4 md:w-4 mr-2 flex-shrink-0" />
+            <span className="truncate">{equipment.location}</span>
           </div>
-          <div className="flex items-center text-sm text-gray-600">
-            <Settings className="h-4 w-4 mr-2" />
-            {equipment.specifications.manufacturer} - {equipment.specifications.model}
+          <div className="flex items-center text-xs md:text-sm text-gray-600">
+            <Settings className="h-3 w-3 md:h-4 md:w-4 mr-2 flex-shrink-0" />
+            <span className="truncate">{equipment.specifications.manufacturer} - {equipment.specifications.model}</span>
           </div>
-          <div className="flex items-center text-sm text-gray-600">
-            <Clock className="h-4 w-4 mr-2" />
-            {equipment.operatingHours.toLocaleString('fr-FR')} heures de fonctionnement
+          <div className="flex items-center text-xs md:text-sm text-gray-600">
+            <Clock className="h-3 w-3 md:h-4 md:w-4 mr-2 flex-shrink-0" />
+            <span>{equipment.operatingHours.toLocaleString('fr-FR')} heures de fonctionnement</span>
           </div>
         </div>
 
@@ -270,16 +270,16 @@ export default function EquipmentManagement() {
   };
 
   return (
-    <div className="p-6">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">Gestion des Équipements</h1>
-        <p className="text-gray-600">
+    <div className="p-3 md:p-6">
+      <div className="mb-4 md:mb-6">
+        <h1 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">Gestion des Équipements</h1>
+        <p className="text-sm md:text-base text-gray-600">
           Supervision et contrôle des équipements industriels - Site de Douala
         </p>
       </div>
 
       {/* Filtres et recherche */}
-      <div className="bg-white rounded-lg shadow-md p-4 mb-6">
+      <div className="bg-white rounded-lg shadow-md p-4 mb-4 md:mb-6">
         <div className="flex flex-col md:flex-row gap-4">
           <div className="flex-1">
             <label className="block text-sm font-medium text-gray-700 mb-1">Rechercher</label>
@@ -288,15 +288,15 @@ export default function EquipmentManagement() {
               placeholder="Nom ou localisation de l'équipement..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
             />
           </div>
-          <div>
+          <div className="md:w-48">
             <label className="block text-sm font-medium text-gray-700 mb-1">Statut</label>
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value as EquipmentStatus | 'ALL')}
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
             >
               <option value="ALL">Tous les statuts</option>
               <option value="OPERATIONAL">Opérationnel</option>
@@ -310,7 +310,7 @@ export default function EquipmentManagement() {
       </div>
 
       {/* Statistiques rapides */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 md:gap-4 mb-4 md:mb-6">
         {[
           { status: 'OPERATIONAL', label: 'Opérationnels', color: 'text-green-600 bg-green-100' },
           { status: 'WARNING', label: 'Attention', color: 'text-yellow-600 bg-yellow-100' },
@@ -320,16 +320,16 @@ export default function EquipmentManagement() {
         ].map(({ status, label, color }) => {
           const count = mockEquipments.filter(eq => eq.status === status).length;
           return (
-            <div key={status} className="bg-white rounded-lg shadow-md p-4 text-center">
-              <div className={`text-2xl font-bold ${color.split(' ')[0]}`}>{count}</div>
-              <div className="text-sm text-gray-600">{label}</div>
+            <div key={status} className="bg-white rounded-lg shadow-md p-3 md:p-4 text-center">
+              <div className={`text-xl md:text-2xl font-bold ${color.split(' ')[0]}`}>{count}</div>
+              <div className="text-xs md:text-sm text-gray-600">{label}</div>
             </div>
           );
         })}
       </div>
 
       {/* Liste des équipements */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6">
         {filteredEquipments.map(equipment => (
           <EquipmentCard
             key={equipment.id}

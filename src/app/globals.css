@@ -77,10 +77,26 @@ body {
   .mobile-content {
     padding-bottom: 80px;
   }
+  
+  /* Améliorations pour les modales sur mobile */
+  .modal-overlay {
+    padding: 16px;
+  }
+  
+  /* Graphiques responsive */
+  .recharts-responsive-container {
+    min-height: 200px !important;
+  }
+  
+  /* Cartes plus compactes sur mobile */
+  .status-card-mobile {
+    padding: 12px !important;
+  }
 }
 
 /* Styles pour les modales */
 .modal-overlay {
+  -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
 }
 

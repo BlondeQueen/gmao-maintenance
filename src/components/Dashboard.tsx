@@ -43,17 +43,17 @@ export default function Dashboard() {
   }
 
   const StatusCard: React.FC<StatusCardProps> = ({ title, value, subtitle, icon: Icon, color, trend }) => (
-    <div className="bg-white rounded-lg shadow-md p-6">
+    <div className="bg-white rounded-lg shadow-md p-4 md:p-6">
       <div className="flex items-center justify-between">
-        <div>
-          <p className="text-gray-600 text-sm font-medium">{title}</p>
-          <p className={`text-2xl font-bold ${color}`}>{value}</p>
-          {subtitle && <p className="text-gray-500 text-sm">{subtitle}</p>}
+        <div className="min-w-0 flex-1">
+          <p className="text-gray-600 text-sm font-medium truncate">{title}</p>
+          <p className={`text-xl md:text-2xl font-bold ${color} break-words`}>{value}</p>
+          {subtitle && <p className="text-gray-500 text-xs md:text-sm truncate">{subtitle}</p>}
         </div>
-        <div className={`p-3 rounded-full ${color === 'text-green-600' ? 'bg-green-100' : 
+        <div className={`p-2 md:p-3 rounded-full flex-shrink-0 ml-2 ${color === 'text-green-600' ? 'bg-green-100' : 
                                             color === 'text-red-600' ? 'bg-red-100' : 
                                             color === 'text-yellow-600' ? 'bg-yellow-100' : 'bg-blue-100'}`}>
-          <Icon className={`h-6 w-6 ${color}`} />
+          <Icon className={`h-5 w-5 md:h-6 md:w-6 ${color}`} />
         </div>
       </div>
       {trend && (
@@ -63,7 +63,7 @@ export default function Dashboard() {
           ) : (
             <TrendingDown className="h-4 w-4 text-red-500 mr-1" />
           )}
-          <span className={`text-sm ${trend === 'up' ? 'text-green-600' : 'text-red-600'}`}>
+          <span className={`text-xs md:text-sm ${trend === 'up' ? 'text-green-600' : 'text-red-600'}`}>
             {trend === 'up' ? '+2.3%' : '-1.2%'} vs mois dernier
           </span>
         </div>
@@ -72,10 +72,10 @@ export default function Dashboard() {
   );
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-3 md:p-6 space-y-4 md:space-y-6">
       {/* En-tête */}
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">
+      <div className="bg-white rounded-lg shadow-md p-4 md:p-6">
+        <h1 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">
           Tableau de Bord - Système Industriel
         </h1>
         <p className="text-gray-600">
@@ -104,7 +104,7 @@ export default function Dashboard() {
       )}
 
       {/* Cartes de statut */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         <StatusCard
           title="Disponibilité Système"
           value={`${systemData.systemEfficiency.toFixed(1)}%`}
@@ -136,18 +136,19 @@ export default function Dashboard() {
       </div>
 
       {/* Graphiques et données */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 md:gap-6">
         {/* Graphique de performance */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Performance Système (7 derniers jours)</h3>
-          <ResponsiveContainer width="100%" height={300}>
+        <div className="bg-white rounded-lg shadow-md p-4 md:p-6">
+          <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-4">Performance Système (7 derniers jours)</h3>
+          <ResponsiveContainer width="100%" height={250}>
             <LineChart data={performanceData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis 
                 dataKey="timestamp" 
                 tickFormatter={(timestamp) => format(new Date(timestamp), 'dd/MM')}
+                fontSize={12}
               />
-              <YAxis domain={[70, 100]} />
+              <YAxis domain={[70, 100]} fontSize={12} />
               <Tooltip 
                 labelFormatter={(timestamp) => format(new Date(timestamp), 'dd MMMM yyyy', { locale: fr })}
                 formatter={(value: number) => [`${value.toFixed(1)}%`, '']}
@@ -178,9 +179,9 @@ export default function Dashboard() {
         </div>
 
         {/* Répartition des équipements */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">État des Équipements</h3>
-          <div className="flex flex-col lg:flex-row items-center">
+        <div className="bg-white rounded-lg shadow-md p-4 md:p-6">
+          <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-4">État des Équipements</h3>
+          <div className="flex flex-col xl:flex-row items-center">
             <ResponsiveContainer width="100%" height={200}>
               <PieChart>
                 <Pie
@@ -199,7 +200,7 @@ export default function Dashboard() {
                 <Tooltip />
               </PieChart>
             </ResponsiveContainer>
-            <div className="lg:ml-4 mt-4 lg:mt-0">
+            <div className="xl:ml-4 mt-4 xl:mt-0 w-full xl:w-auto">
               {equipmentStatusData.map((item, index) => {
                 const getStatusDotClass = () => {
                   switch (item.name) {
@@ -226,29 +227,29 @@ export default function Dashboard() {
       </div>
 
       {/* KPIs détaillés */}
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Indicateurs Clés de Performance</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="bg-white rounded-lg shadow-md p-4 md:p-6">
+        <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-4">Indicateurs Clés de Performance</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {kpis.map((kpi) => (
-            <div key={kpi.id} className="border border-gray-200 rounded-lg p-4">
+            <div key={kpi.id} className="border border-gray-200 rounded-lg p-3 md:p-4">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium text-gray-600">{kpi.name}</span>
+                <span className="text-xs md:text-sm font-medium text-gray-600 truncate">{kpi.name}</span>
                 {kpi.trend === 'UP' ? (
-                  <TrendingUp className="h-4 w-4 text-green-500" />
+                  <TrendingUp className="h-3 w-3 md:h-4 md:w-4 text-green-500 flex-shrink-0" />
                 ) : kpi.trend === 'DOWN' ? (
-                  <TrendingDown className="h-4 w-4 text-red-500" />
+                  <TrendingDown className="h-3 w-3 md:h-4 md:w-4 text-red-500 flex-shrink-0" />
                 ) : (
-                  <Activity className="h-4 w-4 text-gray-400" />
+                  <Activity className="h-3 w-3 md:h-4 md:w-4 text-gray-400 flex-shrink-0" />
                 )}
               </div>
               <div className="flex items-baseline">
-                <span className="text-2xl font-bold text-gray-900">
+                <span className="text-lg md:text-2xl font-bold text-gray-900 truncate">
                   {kpi.value.toLocaleString('fr-FR')}
                 </span>
-                <span className="ml-1 text-gray-500">{kpi.unit}</span>
+                <span className="ml-1 text-gray-500 text-xs md:text-sm">{kpi.unit}</span>
               </div>
               {kpi.target && (
-                <div className="mt-1 text-sm text-gray-500">
+                <div className="mt-1 text-xs text-gray-500 truncate">
                   Objectif: {kpi.target.toLocaleString('fr-FR')} {kpi.unit}
                 </div>
               )}
@@ -258,9 +259,9 @@ export default function Dashboard() {
       </div>
 
       {/* État temps réel des capteurs */}
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">État Temps Réel des Capteurs</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="bg-white rounded-lg shadow-md p-4 md:p-6">
+        <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-4">État Temps Réel des Capteurs</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
           {mockEquipments.flatMap(eq => eq.sensors).slice(0, 6).map((sensor) => {
             const getStatusColor = () => {
               if (sensor.currentValue >= sensor.criticalThreshold) return 'text-red-600 bg-red-100';
@@ -280,24 +281,24 @@ export default function Dashboard() {
             const Icon = getSensorIcon();
 
             return (
-              <div key={sensor.id} className="border border-gray-200 rounded-lg p-4">
+              <div key={sensor.id} className="border border-gray-200 rounded-lg p-3 md:p-4">
                 <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center">
-                    <Icon className="h-4 w-4 text-gray-500 mr-2" />
-                    <span className="text-sm font-medium text-gray-700">{sensor.name}</span>
+                  <div className="flex items-center min-w-0 flex-1">
+                    <Icon className="h-3 w-3 md:h-4 md:w-4 text-gray-500 mr-2 flex-shrink-0" />
+                    <span className="text-xs md:text-sm font-medium text-gray-700 truncate">{sensor.name}</span>
                   </div>
-                  <div className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor()}`}>
+                  <div className={`px-2 py-1 rounded-full text-xs font-medium flex-shrink-0 ml-2 ${getStatusColor()}`}>
                     {sensor.currentValue >= sensor.criticalThreshold ? 'Critique' :
                      sensor.currentValue >= sensor.warningThreshold ? 'Attention' : 'Normal'}
                   </div>
                 </div>
                 <div className="flex items-baseline">
-                  <span className="text-xl font-bold text-gray-900">
+                  <span className="text-lg md:text-xl font-bold text-gray-900">
                     {sensor.currentValue.toFixed(1)}
                   </span>
-                  <span className="ml-1 text-gray-500">{sensor.unit}</span>
+                  <span className="ml-1 text-gray-500 text-xs md:text-sm">{sensor.unit}</span>
                 </div>
-                <div className="mt-1 text-xs text-gray-500">
+                <div className="mt-1 text-xs text-gray-500 truncate">
                   Seuil: {sensor.warningThreshold} / {sensor.criticalThreshold} {sensor.unit}
                 </div>
               </div>
