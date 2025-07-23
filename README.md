@@ -1,10 +1,10 @@
-# Application GMAO - Système de Refroidissement
+# Application GMAO - Industrie Cameroun
 
-Une application web moderne de **Gestion de Maintenance Assistée par Ordinateur (GMAO)** spécialement conçue pour la maintenance préventive du système de refroidissement de l'huile du réducteur principal du broyeur.
+Une application web moderne de **Gestion de Maintenance Assistée par Ordinateur (GMAO)** spécialement conçue pour l'industrie camerounaise, avec un focus sur la maintenance préventive et la gestion optimisée des équipements industriels.
 
 ## 🎯 Objectifs du Projet
 
-Cette application vise à améliorer la maintenance préventive en offrant :
+Cette application vise à améliorer la maintenance industrielle au Cameroun en offrant :
 
 - **Suivi en temps réel** des performances des équipements
 - **Planification intelligente** des interventions de maintenance
@@ -15,17 +15,17 @@ Cette application vise à améliorer la maintenance préventive en offrant :
 
 ## 🏗️ Architecture du Système
 
-### Équipements Supervisés
+### Équipements Industriels Supervisés
 
-Le système couvre tous les équipements critiques du circuit de refroidissement :
+Le système couvre une large gamme d'équipements industriels adaptés au contexte camerounais :
 
-1. **Échangeur de chaleur** - Refroidissement principal de l'huile
-2. **Tours de refroidissement** - Évacuation de la chaleur vers l'atmosphère
-3. **Filtres à eau** - Purification du circuit d'eau de refroidissement
-4. **Filtres à huile** - Maintien de la propreté de l'huile
-5. **Pompes eau/huile** - Circulation des fluides
-6. **Capteurs** - Monitoring en temps réel (température, pression, débit, vibration)
-7. **Débitmètres** - Mesure et contrôle des débits
+1. **Échangeurs de chaleur** - Refroidissement et gestion thermique
+2. **Tours de refroidissement** - Évacuation efficace de la chaleur
+3. **Systèmes de filtration** - Purification des fluides industriels
+4. **Pompes industrielles** - Circulation des fluides de process
+5. **Capteurs IoT** - Monitoring en temps réel (température, pression, débit, vibration)
+6. **Débitmètres** - Mesure et contrôle des débits de production
+7. **Équipements de transformation** - Broyeurs, mélangeurs, séparateurs
 
 ### Technologies Utilisées
 
@@ -133,5 +133,5 @@ npm start
 
 ---
 
-**Développé pour l'optimisation de la maintenance industrielle du système de refroidissement**
+**Développé pour l'optimisation de la maintenance industrielle au Cameroun - Site de Douala**
 # gmao-maintenance

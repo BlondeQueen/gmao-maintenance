@@ -274,7 +274,7 @@ export default function EquipmentManagement() {
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-900 mb-2">Gestion des Équipements</h1>
         <p className="text-gray-600">
-          Supervision et contrôle des équipements du système de refroidissement
+          Supervision et contrôle des équipements industriels - Site de Douala
         </p>
       </div>
 

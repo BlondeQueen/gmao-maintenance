@@ -36,7 +36,7 @@ export default function Navigation({ activeSection, onSectionChange }: Navigatio
           <Gauge className="h-8 w-8 text-blue-300" />
           <div>
             <h1 className="text-xl font-bold">GMAO</h1>
-            <p className="text-blue-300 text-sm">Refroidissement</p>
+            <p className="text-blue-300 text-sm">Industrie Cameroun</p>
           </div>
         </div>
       </div>
@@ -71,8 +71,8 @@ export default function Navigation({ activeSection, onSectionChange }: Navigatio
 
       <div className="mt-8 pt-8 border-t border-blue-700">
         <div className="text-blue-300 text-sm">
-          <p className="font-medium">Système de Refroidissement</p>
-          <p>Réducteur Principal Broyeur</p>
+          <p className="font-medium">Usine de Transformation</p>
+          <p>Site de Douala - Cameroun</p>
         </div>
       </div>
     </nav>

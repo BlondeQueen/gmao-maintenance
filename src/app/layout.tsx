@@ -8,8 +8,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "GMAO - Système de Refroidissement",
-  description: "Application de maintenance préventive pour le système de refroidissement de l'huile du réducteur principal du broyeur",
+  title: "GMAO - Industrie Cameroun",
+  description: "Application de Gestion de Maintenance Assistée par Ordinateur pour l'industrie camerounaise - Site de Douala",
 };
 
 export default function RootLayout({

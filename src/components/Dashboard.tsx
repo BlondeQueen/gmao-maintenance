@@ -76,10 +76,10 @@ export default function Dashboard() {
       {/* En-tête */}
       <div className="bg-white rounded-lg shadow-md p-6">
         <h1 className="text-2xl font-bold text-gray-900 mb-2">
-          Tableau de Bord - Système de Refroidissement
+          Tableau de Bord - Système Industriel
         </h1>
         <p className="text-gray-600">
-          Vue d&apos;ensemble du système de refroidissement de l&apos;huile du réducteur principal
+          Vue d&apos;ensemble du système de maintenance industrielle - Site de Douala
         </p>
         <div className="mt-4 text-sm text-gray-500">
           Dernière mise à jour: {format(systemData.lastSystemCheck, 'dd MMMM yyyy à HH:mm', { locale: fr })}
@@ -139,7 +139,7 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Graphique de performance */}
         <div className="bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Performance Système (7 jours)</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Performance Système (7 derniers jours)</h3>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={performanceData}>
               <CartesianGrid strokeDasharray="3 3" />
