@@ -17,8 +17,6 @@ import { mockSystemOverview, mockKPIs, mockPerformanceData, mockAlerts, mockEqui
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 
-const COLORS = ['#3B82F6', '#EF4444', '#F59E0B', '#10B981'];
-
 export default function Dashboard() {
   const systemData = mockSystemOverview;
   const kpis = mockKPIs;
@@ -202,17 +200,26 @@ export default function Dashboard() {
               </PieChart>
             </ResponsiveContainer>
             <div className="lg:ml-4 mt-4 lg:mt-0">
-              {equipmentStatusData.map((item, index) => (
-                <div key={index} className="flex items-center mb-2">
-                  <div 
-                    className="w-3 h-3 rounded-full mr-2"
-                    style={{ backgroundColor: item.color }}
-                  ></div>
-                  <span className="text-sm text-gray-700">
-                    {item.name}: {item.value}
-                  </span>
-                </div>
-              ))}
+              {equipmentStatusData.map((item, index) => {
+                const getStatusDotClass = () => {
+                  switch (item.name) {
+                    case 'Opérationnel': return 'status-dot-operational';
+                    case 'Avertissement': return 'status-dot-warning';
+                    case 'Critique': return 'status-dot-critical';
+                    case 'Maintenance': return 'status-dot-maintenance';
+                    default: return 'status-dot-maintenance';
+                  }
+                };
+
+                return (
+                  <div key={index} className="flex items-center mb-2">
+                    <div className={`w-3 h-3 rounded-full mr-2 ${getStatusDotClass()}`}></div>
+                    <span className="text-sm text-gray-700">
+                      {item.name}: {item.value}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>

@@ -104,3 +104,20 @@ body {
 .equipment-out-of-service {
   border-left: 4px solid #6B7280;
 }
+
+/* Classes pour les indicateurs de statut */
+.status-dot-operational {
+  background-color: #10B981;
+}
+
+.status-dot-warning {
+  background-color: #F59E0B;
+}
+
+.status-dot-critical {
+  background-color: #EF4444;
+}
+
+.status-dot-maintenance {
+  background-color: #6B7280;
+}

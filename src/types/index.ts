@@ -42,7 +42,7 @@ export interface EquipmentSpecifications {
   flowRate?: number;
   power?: number;
   voltage?: number;
-  additionalSpecs?: Record<string, any>;
+  additionalSpecs?: Record<string, string | number | boolean>;
 }
 
 export interface Sensor {
