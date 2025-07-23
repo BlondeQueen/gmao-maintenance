@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+/* Styles personnalisés pour l'application GMAO */
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --font-inter: Inter, sans-serif;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+body {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  color: var(--foreground);
+  background: var(--background);
+}
+
+/* Styles pour les graphiques Recharts */
+.recharts-responsive-container {
+  min-height: 200px;
+}
+
+.recharts-tooltip-wrapper {
+  outline: none;
+}
+
+/* Styles pour les alertes */
+.alert-critical {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Styles pour les cartes de statut */
+.status-card {
+  transition: all 0.3s ease;
+}
+
+.status-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Responsive design pour les petits écrans */
+@media (max-width: 768px) {
+  .mobile-nav {
+    width: 100%;
+    height: auto;
+    min-height: auto;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 50;
+  }
+  
+  .mobile-nav ul {
+    display: flex;
+    justify-content: space-around;
+    padding: 8px;
+  }
+  
+  .mobile-nav li {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .mobile-content {
+    padding-bottom: 80px;
+  }
+}
+
+/* Styles pour les modales */
+.modal-overlay {
+  backdrop-filter: blur(4px);
+}
+
+/* Couleurs personnalisées pour les équipements */
+.equipment-operational {
+  border-left: 4px solid #10B981;
+}
+
+.equipment-warning {
+  border-left: 4px solid #F59E0B;
+}
+
+.equipment-critical {
+  border-left: 4px solid #EF4444;
+}
+
+.equipment-maintenance {
+  border-left: 4px solid #3B82F6;
+}
+
+.equipment-out-of-service {
+  border-left: 4px solid #6B7280;
+}
