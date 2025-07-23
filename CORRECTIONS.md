@@ -102,6 +102,44 @@ additionalSpecs?: Record<string, string | number | boolean>;
 <div className="p-3 md:p-6 space-y-4 md:space-y-6">
 ```
 
+## 💰 Remplacement des Icônes Dollar
+
+### 5. **Icônes Dollar non adaptées au contexte**
+**Problème :** L'icône `DollarSign` n'est pas appropriée pour le contexte camerounais utilisant le FCFA
+
+**Solution :** Remplacement par l'icône `Coins` (pièces de monnaie) plus universelle
+
+#### MaintenanceManagement.tsx
+```tsx
+// ❌ Avant
+import { DollarSign } from 'lucide-react';
+<DollarSign className="h-3 w-3 mr-1" />
+
+// ✅ Après
+import { Coins } from 'lucide-react';
+<Coins className="h-3 w-3 mr-1" />
+```
+
+#### AnalyticsManagement.tsx
+```tsx
+// ❌ Avant
+import { DollarSign } from 'lucide-react';
+<DollarSign className="h-8 w-8 text-yellow-600" />
+
+// ✅ Après
+import { Coins } from 'lucide-react';
+<Coins className="h-8 w-8 text-yellow-600" />
+```
+
+#### mockData.ts
+```tsx
+// ❌ Avant
+unit: '€',
+
+// ✅ Après
+unit: 'FCFA',
+```
+
 ## 🚀 Résultat du Build
 
 ### Build Réussi ✅
@@ -132,6 +170,8 @@ Route (app)                    Size    First Load JS
 8. ✅ **Espacements responsifs** pour mobile/desktop
 9. ✅ **Graphiques adaptatifs** avec hauteurs optimisées
 10. ✅ **CSS responsive** avec support Safari
+11. ✅ **Remplacement icônes Dollar** par icônes Coins (FCFA)
+12. ✅ **Correction dernière référence Euro** dans les KPIs
 
 ## 📱 Responsivité Ajoutée
 
@@ -148,6 +188,7 @@ Route (app)                    Size    First Load JS
 - ✅ **EquipmentManagement** : Filtres et cartes adaptatives
 - ✅ **StatusCard** : Textes tronqués, icônes responsive
 - ✅ **Graphiques** : Hauteurs et polices adaptées
+- ✅ **Icônes monétaires** : Dollar → Coins (FCFA approprié)
 
 ## 🔧 Modifications de Code
 

@@ -502,7 +502,7 @@ export const mockKPIs: KPI[] = [
     id: 'KPI003',
     name: 'Coût Maintenance',
     value: 15420,
-    unit: '€',
+    unit: 'FCFA',
     target: 18000,
     trend: 'STABLE',
     category: 'COST',

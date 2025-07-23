@@ -15,7 +15,7 @@ import {
   Filter,
   Search,
   TrendingUp,
-  DollarSign
+  Coins
 } from 'lucide-react';
 import { mockEquipments } from '../data/mockData';
 import { MaintenanceRecord, MaintenanceType, MaintenanceStatus, Priority } from '../types';
@@ -239,7 +239,7 @@ export default function MaintenanceManagement() {
               {order.duration}h
             </div>
             <div className="flex items-center">
-              <DollarSign className="h-3 w-3 mr-1" />
+              <Coins className="h-3 w-3 mr-1" />
               {order.cost.toLocaleString('fr-FR')} FCFA
             </div>
           </div>
@@ -298,7 +298,7 @@ export default function MaintenanceManagement() {
         <StatCard title="En cours" value={stats.inProgress} color="text-yellow-600" icon={Clock} />
         <StatCard title="Terminées" value={stats.completed} color="text-green-600" icon={CheckCircle} />
         <StatCard title="En retard" value={stats.overdue} color="text-red-600" icon={AlertTriangle} />
-        <StatCard title="Coût total" value={stats.totalCost} unit="FCFA" color="text-purple-600" icon={DollarSign} />
+        <StatCard title="Coût total" value={stats.totalCost} unit="FCFA" color="text-purple-600" icon={Coins} />
         <StatCard title="Durée moy." value={stats.avgDuration.toFixed(1)} unit="h" color="text-indigo-600" icon={Clock} />
       </div>
 
