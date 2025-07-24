@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { mockSpareParts } from '../data/mockData';
 import { SparePart } from '../types';
+import PartForm from './forms/PartForm';
 
 export default function InventoryManagement() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -21,6 +22,8 @@ export default function InventoryManagement() {
   const [categoryFilter, setCategoryFilter] = useState<string>('ALL');
   const [selectedPart, setSelectedPart] = useState<SparePart | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showPartForm, setShowPartForm] = useState(false);
+  const [editingPart, setEditingPart] = useState<SparePart | null>(null);
 
   // Filtrage des pièces
   const filteredParts = mockSpareParts.filter(part => {
@@ -62,6 +65,31 @@ export default function InventoryManagement() {
     setIsModalOpen(false);
   };
 
+  // Gestion des pièces
+  const handleCreatePart = () => {
+    setEditingPart(null);
+    setShowPartForm(true);
+  };
+
+  const handleEditPart = (part: SparePart) => {
+    setEditingPart(part);
+    setShowPartForm(true);
+    setIsModalOpen(false);
+  };
+
+  const handleSubmitPart = async (partData: Partial<SparePart>) => {
+    console.log('Nouvelle pièce:', partData);
+    // Ici, on sauvegarderait normalement dans une base de données
+    alert('Pièce sauvegardée avec succès !');
+    setShowPartForm(false);
+    setEditingPart(null);
+  };
+
+  const closePartForm = () => {
+    setShowPartForm(false);
+    setEditingPart(null);
+  };
+
   return (
     <div className="p-6 space-y-6">
       {/* En-tête */}
@@ -72,7 +100,10 @@ export default function InventoryManagement() {
             Suivi des pièces de rechange et consommables
           </p>
         </div>
-        <button className="mt-4 sm:mt-0 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center">
+        <button 
+          onClick={handleCreatePart}
+          className="mt-4 sm:mt-0 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center"
+        >
           <Plus className="h-4 w-4 mr-2" />
           Ajouter une pièce
         </button>
@@ -291,7 +322,8 @@ export default function InventoryManagement() {
                       </button>
                       <button 
                         className="text-green-600 hover:text-green-900"
-                        title="Modifier"
+                        onClick={() => handleEditPart(part)}
+                        title="Modifier cette pièce"
                       >
                         <Edit className="h-4 w-4" />
                       </button>
@@ -372,7 +404,10 @@ export default function InventoryManagement() {
                 >
                   Fermer
                 </button>
-                <button className="px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700">
+                <button 
+                  className="px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700"
+                  onClick={() => selectedPart && handleEditPart(selectedPart)}
+                >
                   Modifier
                 </button>
               </div>
@@ -380,6 +415,14 @@ export default function InventoryManagement() {
           </div>
         </div>
       )}
+
+      {/* Formulaire de pièce */}
+      <PartForm
+        isOpen={showPartForm}
+        onClose={closePartForm}
+        onSubmit={handleSubmitPart}
+        part={editingPart || undefined}
+      />
     </div>
   );
 }

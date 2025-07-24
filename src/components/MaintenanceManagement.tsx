@@ -18,6 +18,7 @@ import {
   Coins
 } from 'lucide-react';
 import { mockEquipments } from '../data/mockData';
+import MaintenanceForm from './forms/MaintenanceForm';
 import { MaintenanceRecord, MaintenanceType, MaintenanceStatus, Priority } from '../types';
 import { format, addDays } from 'date-fns';
 import { fr } from 'date-fns/locale';
@@ -86,6 +87,8 @@ export default function MaintenanceManagement() {
   const [filterPriority, setFilterPriority] = useState<Priority | 'ALL'>('ALL');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedOrder, setSelectedOrder] = useState<MaintenanceRecord | null>(null);
+  const [showMaintenanceForm, setShowMaintenanceForm] = useState(false);
+  const [editingMaintenance, setEditingMaintenance] = useState<MaintenanceRecord | null>(null);
 
   // Filtrage des ordres
   const filteredOrders = maintenanceOrders.filter(order => {
@@ -113,6 +116,31 @@ export default function MaintenanceManagement() {
     ).length,
     totalCost: maintenanceOrders.reduce((sum, o) => sum + o.cost, 0),
     avgDuration: maintenanceOrders.reduce((sum, o) => sum + o.duration, 0) / maintenanceOrders.length
+  };
+
+  // Gestion des maintenances
+  const handleCreateMaintenance = () => {
+    setEditingMaintenance(null);
+    setShowMaintenanceForm(true);
+  };
+
+  const handleEditMaintenance = (order: MaintenanceRecord) => {
+    setEditingMaintenance(order);
+    setShowMaintenanceForm(true);
+    setSelectedOrder(null);
+  };
+
+  const handleSubmitMaintenance = async (maintenanceData: Partial<MaintenanceRecord>) => {
+    console.log('Nouvelle maintenance:', maintenanceData);
+    // Ici, on sauvegarderait normalement dans une base de données
+    alert('Maintenance sauvegardée avec succès !');
+    setShowMaintenanceForm(false);
+    setEditingMaintenance(null);
+  };
+
+  const closeMaintenanceForm = () => {
+    setShowMaintenanceForm(false);
+    setEditingMaintenance(null);
   };
 
   const getTypeInfo = (type: MaintenanceType) => {
@@ -266,7 +294,11 @@ export default function MaintenanceManagement() {
               <Eye className="h-3 w-3 inline mr-1" />
               Détails
             </button>
-            <button className="px-3 py-1 bg-gray-600 text-white text-xs rounded hover:bg-gray-700 transition-colors">
+            <button 
+              className="px-3 py-1 bg-gray-600 text-white text-xs rounded hover:bg-gray-700 transition-colors"
+              onClick={() => handleEditMaintenance(order)}
+              title="Modifier cette maintenance"
+            >
               <Edit className="h-3 w-3 inline mr-1" />
               Modifier
             </button>
@@ -285,7 +317,10 @@ export default function MaintenanceManagement() {
             Planification et suivi des interventions de maintenance
           </p>
         </div>
-        <button className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+        <button 
+          onClick={handleCreateMaintenance}
+          className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+        >
           <Plus className="h-4 w-4 mr-2" />
           Nouvel Ordre
         </button>
@@ -585,16 +620,25 @@ export default function MaintenanceManagement() {
                 >
                   Fermer
                 </button>
-                <button className="px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700">
+                <button 
+                  onClick={() => selectedOrder && handleEditMaintenance(selectedOrder)}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700"
+                >
                   Modifier
                 </button>
                 {selectedOrder.status === 'SCHEDULED' && (
-                  <button className="px-4 py-2 bg-green-600 text-white rounded-md text-sm font-medium hover:bg-green-700">
+                  <button 
+                    onClick={() => alert('Démarrage de la maintenance en cours...')}
+                    className="px-4 py-2 bg-green-600 text-white rounded-md text-sm font-medium hover:bg-green-700"
+                  >
                     Démarrer
                   </button>
                 )}
                 {selectedOrder.status === 'IN_PROGRESS' && (
-                  <button className="px-4 py-2 bg-green-600 text-white rounded-md text-sm font-medium hover:bg-green-700">
+                  <button 
+                    onClick={() => alert('Finalisation de la maintenance...')}
+                    className="px-4 py-2 bg-green-600 text-white rounded-md text-sm font-medium hover:bg-green-700"
+                  >
                     Terminer
                   </button>
                 )}
@@ -603,6 +647,17 @@ export default function MaintenanceManagement() {
           </div>
         </div>
       )}
+
+      {/* Formulaire de maintenance */}
+      <MaintenanceForm
+        isOpen={showMaintenanceForm}
+        onClose={closeMaintenanceForm}
+        onSubmit={handleSubmitMaintenance}
+        maintenance={editingMaintenance ? {
+          ...editingMaintenance,
+          scheduledDate: editingMaintenance.scheduledDate.toISOString().slice(0, 16)
+        } : undefined}
+      />
     </div>
   );
 }

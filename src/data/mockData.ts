@@ -10,7 +10,7 @@ export const mockEquipments: Equipment[] = [
     location: 'Zone A - Salle des machines',
     installationDate: new Date('2020-03-15'),
     lastMaintenanceDate: new Date('2024-12-01'),
-    nextMaintenanceDate: new Date('2025-02-01'),
+    nextMaintenanceDate: new Date('2025-08-01'),
     operatingHours: 15840,
     specifications: {
       manufacturer: 'Alfa Laval',
@@ -63,7 +63,7 @@ export const mockEquipments: Equipment[] = [
     location: 'Extérieur - Zone Nord',
     installationDate: new Date('2019-08-20'),
     lastMaintenanceDate: new Date('2024-11-15'),
-    nextMaintenanceDate: new Date('2025-01-15'),
+    nextMaintenanceDate: new Date('2025-09-15'),
     operatingHours: 22100,
     specifications: {
       manufacturer: 'SPX Cooling',
@@ -111,7 +111,7 @@ export const mockEquipments: Equipment[] = [
     location: 'Zone B - Local pompes',
     installationDate: new Date('2021-01-10'),
     lastMaintenanceDate: new Date('2024-12-10'),
-    nextMaintenanceDate: new Date('2025-03-10'),
+    nextMaintenanceDate: new Date('2025-10-10'),
     operatingHours: 12500,
     specifications: {
       manufacturer: 'Grundfos',
@@ -160,7 +160,7 @@ export const mockEquipments: Equipment[] = [
     location: 'Zone B - Circuit huile',
     installationDate: new Date('2022-05-01'),
     lastMaintenanceDate: new Date('2024-10-01'),
-    nextMaintenanceDate: new Date('2025-01-01'),
+    nextMaintenanceDate: new Date('2025-08-15'),
     operatingHours: 8760,
     specifications: {
       manufacturer: 'Pall Corporation',
@@ -197,7 +197,7 @@ export const mockEquipments: Equipment[] = [
     location: 'Zone A - Circuit principal',
     installationDate: new Date('2021-09-15'),
     lastMaintenanceDate: new Date('2024-11-20'),
-    nextMaintenanceDate: new Date('2025-02-20'),
+    nextMaintenanceDate: new Date('2025-09-20'),
     operatingHours: 11200,
     specifications: {
       manufacturer: 'Endress+Hauser',

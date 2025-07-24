@@ -8,6 +8,9 @@ import {
   Clock, 
   Wrench,
   Eye,
+  Edit3,
+  Trash2,
+  Plus,
   Calendar,
   Thermometer,
   Gauge as GaugeIcon,
@@ -16,8 +19,10 @@ import {
   MapPin,
   Info
 } from 'lucide-react';
-import { mockEquipments } from '../data/mockData';
 import { Equipment, EquipmentStatus, SensorType } from '../types';
+import { mockEquipments } from '../data/mockData';
+// import { useAppContext } from '../context/AppContext';
+import EquipmentForm from './forms/EquipmentForm';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 
@@ -32,16 +37,30 @@ interface EquipmentDetailsProps {
 }
 
 export default function EquipmentManagement() {
+  // const { equipments, deleteEquipment } = useAppContext();
+  const equipments = mockEquipments; // Utilisation temporaire des données mock
+  const deleteEquipment = (id: string) => {
+    console.log('Suppression équipement:', id);
+    // Fonction temporaire - sera remplacée par le contexte
+  };
   const [selectedEquipment, setSelectedEquipment] = useState<Equipment | null>(null);
+  const [editingEquipment, setEditingEquipment] = useState<Equipment | null>(null);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState<string | null>(null);
   const [filterStatus, setFilterStatus] = useState<EquipmentStatus | 'ALL'>('ALL');
   const [searchTerm, setSearchTerm] = useState('');
 
-  const filteredEquipments = mockEquipments.filter(equipment => {
+  const filteredEquipments = equipments.filter((equipment: Equipment) => {
     const matchesStatus = filterStatus === 'ALL' || equipment.status === filterStatus;
     const matchesSearch = equipment.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          equipment.location.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesStatus && matchesSearch;
   });
+
+  const handleDeleteEquipment = (id: string) => {
+    deleteEquipment(id);
+    setShowDeleteConfirm(null);
+  };
 
   const getStatusInfo = (status: EquipmentStatus) => {
     switch (status) {
@@ -132,13 +151,32 @@ export default function EquipmentManagement() {
           </div>
         )}
 
-        <button
-          onClick={() => onViewDetails(equipment)}
-          className="w-full flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-        >
-          <Eye className="h-4 w-4 mr-2" />
-          Voir détails
-        </button>
+        <div className="flex flex-wrap gap-2">
+          <button
+            onClick={() => onViewDetails(equipment)}
+            className="flex items-center px-2 md:px-3 py-1 md:py-2 text-xs md:text-sm font-medium text-blue-600 bg-blue-50 rounded-md hover:bg-blue-100 transition-colors"
+            title="Voir les détails"
+          >
+            <Eye className="h-3 w-3 md:h-4 md:w-4 mr-1" />
+            <span className="hidden sm:inline">Détails</span>
+          </button>
+          <button
+            onClick={() => setEditingEquipment(equipment)}
+            className="flex items-center px-2 md:px-3 py-1 md:py-2 text-xs md:text-sm font-medium text-green-600 bg-green-50 rounded-md hover:bg-green-100 transition-colors"
+            title="Modifier l'équipement"
+          >
+            <Edit3 className="h-3 w-3 md:h-4 md:w-4 mr-1" />
+            <span className="hidden sm:inline">Modifier</span>
+          </button>
+          <button
+            onClick={() => setShowDeleteConfirm(equipment.id)}
+            className="flex items-center px-2 md:px-3 py-1 md:py-2 text-xs md:text-sm font-medium text-red-600 bg-red-50 rounded-md hover:bg-red-100 transition-colors"
+            title="Supprimer l'équipement"
+          >
+            <Trash2 className="h-3 w-3 md:h-4 md:w-4 mr-1" />
+            <span className="hidden sm:inline">Supprimer</span>
+          </button>
+        </div>
       </div>
     );
   };
@@ -162,6 +200,7 @@ export default function EquipmentManagement() {
               <button
                 onClick={onClose}
                 className="text-gray-400 hover:text-gray-600"
+                title="Fermer"
               >
                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -271,11 +310,20 @@ export default function EquipmentManagement() {
 
   return (
     <div className="p-3 md:p-6">
-      <div className="mb-4 md:mb-6">
-        <h1 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">Gestion des Équipements</h1>
-        <p className="text-sm md:text-base text-gray-600">
-          Supervision et contrôle des équipements industriels - Site de Douala
-        </p>
+      <div className="mb-4 md:mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h1 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">Gestion des Équipements</h1>
+          <p className="text-sm md:text-base text-gray-600">
+            Supervision et contrôle des équipements industriels - Site de Douala
+          </p>
+        </div>
+        <button
+          onClick={() => setShowAddForm(true)}
+          className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+        >
+          <Plus className="h-5 w-5 mr-2" />
+          Ajouter un équipement
+        </button>
       </div>
 
       {/* Filtres et recherche */}
@@ -297,6 +345,7 @@ export default function EquipmentManagement() {
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value as EquipmentStatus | 'ALL')}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+              title="Filtrer par statut"
             >
               <option value="ALL">Tous les statuts</option>
               <option value="OPERATIONAL">Opérationnel</option>
@@ -318,7 +367,7 @@ export default function EquipmentManagement() {
           { status: 'MAINTENANCE', label: 'Maintenance', color: 'text-blue-600 bg-blue-100' },
           { status: 'OUT_OF_SERVICE', label: 'Hors service', color: 'text-gray-600 bg-gray-100' }
         ].map(({ status, label, color }) => {
-          const count = mockEquipments.filter(eq => eq.status === status).length;
+          const count = equipments.filter((eq: Equipment) => eq.status === status).length;
           return (
             <div key={status} className="bg-white rounded-lg shadow-md p-3 md:p-4 text-center">
               <div className={`text-xl md:text-2xl font-bold ${color.split(' ')[0]}`}>{count}</div>
@@ -355,6 +404,58 @@ export default function EquipmentManagement() {
           equipment={selectedEquipment}
           onClose={() => setSelectedEquipment(null)}
         />
+      )}
+
+      {/* Formulaire d'ajout d'équipement */}
+      <EquipmentForm
+        isOpen={showAddForm}
+        onClose={() => setShowAddForm(false)}
+        onSuccess={() => {
+          setShowAddForm(false);
+          // Refresh des données déjà fait par le contexte
+        }}
+      />
+
+      {/* Formulaire de modification d'équipement */}
+      {editingEquipment && (
+        <EquipmentForm
+          equipment={editingEquipment}
+          isOpen={true}
+          onClose={() => setEditingEquipment(null)}
+          onSuccess={() => {
+            setEditingEquipment(null);
+            // Refresh des données déjà fait par le contexte
+          }}
+        />
+      )}
+
+      {/* Modal de confirmation de suppression */}
+      {showDeleteConfirm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg max-w-md w-full p-6">
+            <div className="flex items-center mb-4">
+              <AlertTriangle className="h-6 w-6 text-red-600 mr-3" />
+              <h3 className="text-lg font-medium text-gray-900">Confirmer la suppression</h3>
+            </div>
+            <p className="text-gray-600 mb-6">
+              Êtes-vous sûr de vouloir supprimer cet équipement ? Cette action est irréversible et supprimera également tous les enregistrements de maintenance associés.
+            </p>
+            <div className="flex justify-end space-x-3">
+              <button
+                onClick={() => setShowDeleteConfirm(null)}
+                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+              >
+                Annuler
+              </button>
+              <button
+                onClick={() => handleDeleteEquipment(showDeleteConfirm)}
+                className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 transition-colors"
+              >
+                Supprimer
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

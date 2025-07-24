@@ -16,6 +16,22 @@ import { mockMaintenanceRecords, mockEquipments } from '../data/mockData';
 import { MaintenanceType, Priority } from '../types';
 import { format, addDays, startOfWeek, endOfWeek, isSameDay, isToday } from 'date-fns';
 import { fr } from 'date-fns/locale';
+import InterventionForm from './forms/InterventionForm';
+
+interface Intervention {
+  id?: string;
+  title: string;
+  description?: string;
+  equipmentId: string;
+  technician: string;
+  startDate: string;
+  endDate?: string;
+  priority: string;
+  type: string;
+  status?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
 
 interface CalendarEvent {
   id: string;
@@ -36,6 +52,8 @@ export default function CalendarManagement() {
   const [typeFilter, setTypeFilter] = useState<string>('ALL');
   const [priorityFilter, setPriorityFilter] = useState<string>('ALL');
   const [technicianFilter, setTechnicianFilter] = useState<string>('ALL');
+  const [showInterventionForm, setShowInterventionForm] = useState(false);
+  const [editingIntervention, setEditingIntervention] = useState<CalendarEvent | null>(null);
 
   // Conversion des données de maintenance en événements de calendrier
   const events: CalendarEvent[] = mockMaintenanceRecords.map(record => {
@@ -93,6 +111,31 @@ export default function CalendarManagement() {
     setIsModalOpen(false);
   };
 
+  // Gestion des interventions
+  const handleCreateIntervention = () => {
+    setEditingIntervention(null);
+    setShowInterventionForm(true);
+  };
+
+  const handleEditIntervention = (event: CalendarEvent) => {
+    setEditingIntervention(event);
+    setShowInterventionForm(true);
+    setIsModalOpen(false);
+  };
+
+  const handleSubmitIntervention = async (interventionData: Intervention) => {
+    console.log('Nouvelle intervention:', interventionData);
+    // Ici, on sauvegarderait normalement dans une base de données
+    alert('Intervention sauvegardée avec succès !');
+    setShowInterventionForm(false);
+    setEditingIntervention(null);
+  };
+
+  const closeInterventionForm = () => {
+    setShowInterventionForm(false);
+    setEditingIntervention(null);
+  };
+
   // Couleurs selon le type de maintenance
   const getEventColor = (type: MaintenanceType, priority: Priority) => {
     const baseColors = {
@@ -131,7 +174,11 @@ export default function CalendarManagement() {
             Planification et suivi des interventions
           </p>
         </div>
-        <button className="mt-4 sm:mt-0 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center">
+        <button 
+          className="mt-4 sm:mt-0 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center"
+          onClick={handleCreateIntervention}
+          title="Créer une nouvelle intervention"
+        >
           <Plus className="h-4 w-4 mr-2" />
           Nouvelle intervention
         </button>
@@ -364,7 +411,10 @@ export default function CalendarManagement() {
                 >
                   Fermer
                 </button>
-                <button className="px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700">
+                <button 
+                  className="px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700"
+                  onClick={() => selectedEvent && handleEditIntervention(selectedEvent)}
+                >
                   Modifier
                 </button>
               </div>
@@ -372,6 +422,14 @@ export default function CalendarManagement() {
           </div>
         </div>
       )}
+
+      {/* Formulaire d'intervention */}
+      <InterventionForm
+        isOpen={showInterventionForm}
+        onClose={closeInterventionForm}
+        onSubmit={handleSubmitIntervention}
+        intervention={editingIntervention || undefined}
+      />
     </div>
   );
 }
