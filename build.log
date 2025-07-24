@@ -1,0 +1,139 @@
+
+> gmao-maintenance@0.1.0 build
+> next build
+
+ ⚠ Warning: Found multiple lockfiles. Selecting /home/blonde/package-lock.json.
+   Consider removing the lockfiles at:
+   * /home/blonde/Documents/gmao-maintenance/package-lock.json
+
+   ▲ Next.js 15.4.3
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 8.0s
+   Linting and checking validity of types ...
+
+./src/components/AlertCenter.tsx
+238:13  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+251:13  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+269:13  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+
+./src/components/CalendarManagement.tsx
+380:19  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+384:19  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+388:19  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+392:19  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+396:19  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+400:19  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+
+./src/components/EquipmentManagement.tsx
+333:13  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+343:13  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+
+./src/components/InventoryManagement.tsx
+358:19  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+362:19  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+366:19  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+370:19  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+374:19  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+378:19  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+382:19  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+386:19  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+395:19  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+
+./src/components/MaintenanceManagement.tsx
+356:13  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+369:13  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+388:13  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+407:13  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+498:21  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+503:21  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+508:21  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+513:21  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+522:21  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+530:23  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+539:23  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+548:23  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+555:23  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+
+./src/components/forms/EquipmentForm.tsx
+247:17  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+262:17  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+281:17  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+300:17  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+315:17  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+329:17  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+348:19  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+363:19  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+378:19  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+393:19  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+407:19  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+422:19  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+436:19  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+451:19  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+466:19  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+510:23  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+527:23  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+540:23  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+553:23  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+566:23  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+579:23  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+592:23  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+605:23  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+
+./src/components/forms/InterventionForm.tsx
+88:17  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+89:29  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+101:17  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+121:15  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+135:17  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+154:17  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+155:25  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+172:17  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+185:17  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+198:15  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+
+./src/components/forms/MaintenanceForm.tsx
+115:17  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+129:17  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+150:15  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+165:17  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+183:17  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+203:17  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+223:17  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+239:17  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+254:17  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+
+./src/components/forms/PartForm.tsx
+117:17  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+131:17  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+146:15  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+160:17  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+179:17  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+200:17  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+215:17  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+234:17  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+250:17  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+264:17  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+278:17  Warning: A form label must be associated with a control.  jsx-a11y/label-has-associated-control
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/app/api-reference/config/eslint#disabling-rules
+   Collecting page data ...
+   Generating static pages (0/5) ...
+   Generating static pages (1/5) 
+   Generating static pages (2/5) 
+   Generating static pages (3/5) 
+ ✓ Generating static pages (5/5)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                     147 kB         247 kB
+└ ○ /_not-found                            989 B         101 kB
++ First Load JS shared by all            99.6 kB
+  ├ chunks/4bd1b696-cf72ae8a39fa05aa.js  54.1 kB
+  ├ chunks/964-c3e49cf7341645bb.js       43.5 kB
+  └ other shared chunks (total)          1.93 kB
+
+
+○  (Static)  prerendered as static content
+

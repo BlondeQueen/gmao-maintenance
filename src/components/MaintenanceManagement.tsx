@@ -130,7 +130,19 @@ export default function MaintenanceManagement() {
     setSelectedOrder(null);
   };
 
-  const handleSubmitMaintenance = async (maintenanceData: Partial<MaintenanceRecord>) => {
+  const handleSubmitMaintenance = async (maintenanceData: {
+    id?: string;
+    title: string;
+    description?: string;
+    equipmentId: string;
+    type: MaintenanceType;
+    priority: Priority;
+    technician: string;
+    scheduledDate: string;
+    duration: number;
+    cost?: number;
+    status?: string;
+  }) => {
     console.log('Nouvelle maintenance:', maintenanceData);
     // Ici, on sauvegarderait normalement dans une base de données
     alert('Maintenance sauvegardée avec succès !');
@@ -341,11 +353,12 @@ export default function MaintenanceManagement() {
       <div className="bg-white rounded-lg shadow-md p-4 mb-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="maintenance-search" className="block text-sm font-medium text-gray-700 mb-1">
               <Search className="inline h-4 w-4 mr-1" />
               Rechercher
             </label>
             <input
+              id="maintenance-search"
               type="text"
               placeholder="Équipement, description, OT..."
               value={searchTerm}
@@ -354,11 +367,12 @@ export default function MaintenanceManagement() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="maintenance-type-filter" className="block text-sm font-medium text-gray-700 mb-1">
               <Filter className="inline h-4 w-4 mr-1" />
               Type
             </label>
             <select
+              id="maintenance-type-filter"
               value={filterType}
               onChange={(e) => setFilterType(e.target.value as MaintenanceType | 'ALL')}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -373,11 +387,12 @@ export default function MaintenanceManagement() {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="maintenance-status-filter" className="block text-sm font-medium text-gray-700 mb-1">
               <Filter className="inline h-4 w-4 mr-1" />
               Statut
             </label>
             <select
+              id="maintenance-status-filter"
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value as MaintenanceStatus | 'ALL')}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -392,11 +407,12 @@ export default function MaintenanceManagement() {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="maintenance-priority-filter" className="block text-sm font-medium text-gray-700 mb-1">
               <Filter className="inline h-4 w-4 mr-1" />
               Priorité
             </label>
             <select
+              id="maintenance-priority-filter"
               value={filterPriority}
               onChange={(e) => setFilterPriority(e.target.value as Priority | 'ALL')}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -483,22 +499,22 @@ export default function MaintenanceManagement() {
                   <h3 className="text-lg font-semibold text-gray-900">Informations générales</h3>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Description</label>
+                    <span className="block text-sm font-medium text-gray-700">Description</span>
                     <p className="mt-1 text-sm text-gray-900">{selectedOrder.description}</p>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Technicien assigné</label>
+                    <span className="block text-sm font-medium text-gray-700">Technicien assigné</span>
                     <p className="mt-1 text-sm text-gray-900">{selectedOrder.technician}</p>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Durée prévue</label>
+                    <span className="block text-sm font-medium text-gray-700">Durée prévue</span>
                     <p className="mt-1 text-sm text-gray-900">{selectedOrder.duration} heures</p>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Coût estimé</label>
+                    <span className="block text-sm font-medium text-gray-700">Coût estimé</span>
                     <p className="mt-1 text-sm text-gray-900">{selectedOrder.cost.toLocaleString('fr-FR')} FCFA</p>
                   </div>
                 </div>
@@ -507,7 +523,7 @@ export default function MaintenanceManagement() {
                   <h3 className="text-lg font-semibold text-gray-900">Planification</h3>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Date planifiée</label>
+                    <span className="block text-sm font-medium text-gray-700">Date planifiée</span>
                     <p className="mt-1 text-sm text-gray-900">
                       {format(selectedOrder.scheduledDate, 'dd/MM/yyyy HH:mm', { locale: fr })}
                     </p>
@@ -515,7 +531,7 @@ export default function MaintenanceManagement() {
 
                   {selectedOrder.actualDate && (
                     <div>
-                      <label className="block text-sm font-medium text-gray-700">Date de début réelle</label>
+                      <span className="block text-sm font-medium text-gray-700">Date de début réelle</span>
                       <p className="mt-1 text-sm text-gray-900">
                         {format(selectedOrder.actualDate, 'dd/MM/yyyy HH:mm', { locale: fr })}
                       </p>
@@ -524,7 +540,7 @@ export default function MaintenanceManagement() {
 
                   {selectedOrder.completedDate && (
                     <div>
-                      <label className="block text-sm font-medium text-gray-700">Date de fin</label>
+                      <span className="block text-sm font-medium text-gray-700">Date de fin</span>
                       <p className="mt-1 text-sm text-gray-900">
                         {format(selectedOrder.completedDate, 'dd/MM/yyyy HH:mm', { locale: fr })}
                       </p>
@@ -533,14 +549,14 @@ export default function MaintenanceManagement() {
 
                   {selectedOrder.failureMode && (
                     <div>
-                      <label className="block text-sm font-medium text-gray-700">Mode de défaillance</label>
+                      <span className="block text-sm font-medium text-gray-700">Mode de défaillance</span>
                       <p className="mt-1 text-sm text-gray-900">{selectedOrder.failureMode}</p>
                     </div>
                   )}
 
                   {selectedOrder.rootCause && (
                     <div>
-                      <label className="block text-sm font-medium text-gray-700">Cause racine</label>
+                      <span className="block text-sm font-medium text-gray-700">Cause racine</span>
                       <p className="mt-1 text-sm text-gray-900">{selectedOrder.rootCause}</p>
                     </div>
                   )}

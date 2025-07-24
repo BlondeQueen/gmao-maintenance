@@ -377,27 +377,27 @@ export default function CalendarManagement() {
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Équipement</label>
+                  <span className="block text-sm font-medium text-gray-700">Équipement</span>
                   <p className="mt-1 text-sm text-gray-900">{selectedEvent.equipmentName}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Type</label>
+                  <span className="block text-sm font-medium text-gray-700">Type</span>
                   <p className="mt-1 text-sm text-gray-900">{selectedEvent.type}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Priorité</label>
+                  <span className="block text-sm font-medium text-gray-700">Priorité</span>
                   <p className="mt-1 text-sm text-gray-900">{selectedEvent.priority}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Statut</label>
+                  <span className="block text-sm font-medium text-gray-700">Statut</span>
                   <p className="mt-1 text-sm text-gray-900">{selectedEvent.status}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Technicien</label>
+                  <span className="block text-sm font-medium text-gray-700">Technicien</span>
                   <p className="mt-1 text-sm text-gray-900">{selectedEvent.technician}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Date planifiée</label>
+                  <span className="block text-sm font-medium text-gray-700">Date planifiée</span>
                   <p className="mt-1 text-sm text-gray-900">
                     {format(selectedEvent.start, 'dd/MM/yyyy HH:mm', { locale: fr })}
                   </p>

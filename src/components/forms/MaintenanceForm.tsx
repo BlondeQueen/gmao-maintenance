@@ -3,14 +3,15 @@
 import React, { useState } from 'react';
 import { X, Save } from 'lucide-react';
 import { mockEquipments } from '../../data/mockData';
+import { MaintenanceType, Priority } from '../../types';
 
 interface Maintenance {
   id?: string;
   title: string;
   description?: string;
   equipmentId: string;
-  type: string;
-  priority: string;
+  type: MaintenanceType;
+  priority: Priority;
   technician: string;
   scheduledDate: string;
   duration: number;
@@ -32,8 +33,8 @@ export default function MaintenanceForm({ isOpen, onClose, onSubmit, maintenance
     title: maintenance?.title || '',
     description: maintenance?.description || '',
     equipmentId: maintenance?.equipmentId || '',
-    type: maintenance?.type || 'PREVENTIVE',
-    priority: maintenance?.priority || 'MEDIUM',
+    type: maintenance?.type || 'PREVENTIVE' as MaintenanceType,
+    priority: maintenance?.priority || 'MEDIUM' as Priority,
     technician: maintenance?.technician || '',
     scheduledDate: maintenance?.scheduledDate || '',
     duration: maintenance?.duration || 4,
@@ -166,7 +167,7 @@ export default function MaintenanceForm({ isOpen, onClose, onSubmit, maintenance
                 </label>
                 <select
                   value={formData.type}
-                  onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                  onChange={(e) => setFormData({ ...formData, type: e.target.value as MaintenanceType })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   title="Type de maintenance"
                 >
@@ -184,7 +185,7 @@ export default function MaintenanceForm({ isOpen, onClose, onSubmit, maintenance
                 </label>
                 <select
                   value={formData.priority}
-                  onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
+                  onChange={(e) => setFormData({ ...formData, priority: e.target.value as Priority })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   title="Priorité de la maintenance"
                 >

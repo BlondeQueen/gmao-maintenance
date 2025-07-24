@@ -235,11 +235,12 @@ export default function AlertCenter() {
       <div className="bg-white rounded-lg shadow-md p-4 mb-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="alert-search" className="block text-sm font-medium text-gray-700 mb-1">
               <Search className="inline h-4 w-4 mr-1" />
               Rechercher
             </label>
             <input
+              id="alert-search"
               type="text"
               placeholder="Équipement ou message..."
               value={searchTerm}
@@ -248,11 +249,12 @@ export default function AlertCenter() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="alert-severity-filter" className="block text-sm font-medium text-gray-700 mb-1">
               <Filter className="inline h-4 w-4 mr-1" />
               Sévérité
             </label>
             <select
+              id="alert-severity-filter"
               value={filterSeverity}
               onChange={(e) => setFilterSeverity(e.target.value as AlertSeverity | 'ALL')}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -266,11 +268,12 @@ export default function AlertCenter() {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="alert-status-filter" className="block text-sm font-medium text-gray-700 mb-1">
               <Filter className="inline h-4 w-4 mr-1" />
               Statut
             </label>
             <select
+              id="alert-status-filter"
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value as 'ALL' | 'ACTIVE' | 'ACKNOWLEDGED' | 'RESOLVED')}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"

@@ -34,10 +34,10 @@ export default function PartForm({ isOpen, onClose, onSubmit, part }: PartFormPr
     description: part?.description || '',
     category: part?.category || '',
     supplier: part?.supplier || '',
-    unitPrice: part?.unitPrice || '',
-    stock: part?.stock || '',
-    minStock: part?.minStock || '',
-    maxStock: part?.maxStock || '',
+    unitPrice: part?.unitPrice?.toString() || '',
+    stock: part?.stock?.toString() || '',
+    minStock: part?.minStock?.toString() || '',
+    maxStock: part?.maxStock?.toString() || '',
     location: part?.location || '',
     unit: part?.unit || 'unité'
   });

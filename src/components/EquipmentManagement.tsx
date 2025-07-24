@@ -330,8 +330,9 @@ export default function EquipmentManagement() {
       <div className="bg-white rounded-lg shadow-md p-4 mb-4 md:mb-6">
         <div className="flex flex-col md:flex-row gap-4">
           <div className="flex-1">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Rechercher</label>
+            <label htmlFor="equipment-search" className="block text-sm font-medium text-gray-700 mb-1">Rechercher</label>
             <input
+              id="equipment-search"
               type="text"
               placeholder="Nom ou localisation de l'équipement..."
               value={searchTerm}
@@ -340,8 +341,9 @@ export default function EquipmentManagement() {
             />
           </div>
           <div className="md:w-48">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Statut</label>
+            <label htmlFor="equipment-status-filter" className="block text-sm font-medium text-gray-700 mb-1">Statut</label>
             <select
+              id="equipment-status-filter"
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value as EquipmentStatus | 'ALL')}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"

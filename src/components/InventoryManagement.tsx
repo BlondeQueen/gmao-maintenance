@@ -355,35 +355,35 @@ export default function InventoryManagement() {
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Nom</label>
+                  <span className="block text-sm font-medium text-gray-700">Nom</span>
                   <p className="mt-1 text-sm text-gray-900">{selectedPart.name}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Référence</label>
+                  <span className="block text-sm font-medium text-gray-700">Référence</span>
                   <p className="mt-1 text-sm text-gray-900">{selectedPart.partNumber}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Catégorie</label>
+                  <span className="block text-sm font-medium text-gray-700">Catégorie</span>
                   <p className="mt-1 text-sm text-gray-900">{selectedPart.category}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Fournisseur</label>
+                  <span className="block text-sm font-medium text-gray-700">Fournisseur</span>
                   <p className="mt-1 text-sm text-gray-900">{selectedPart.supplier}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Stock actuel</label>
+                  <span className="block text-sm font-medium text-gray-700">Stock actuel</span>
                   <p className="mt-1 text-sm text-gray-900">{selectedPart.currentStock} {selectedPart.unit}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Stock minimum</label>
+                  <span className="block text-sm font-medium text-gray-700">Stock minimum</span>
                   <p className="mt-1 text-sm text-gray-900">{selectedPart.minStock} {selectedPart.unit}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Prix unitaire</label>
+                  <span className="block text-sm font-medium text-gray-700">Prix unitaire</span>
                   <p className="mt-1 text-sm text-gray-900">{selectedPart.unitCost.toLocaleString('fr-FR')} FCFA</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Valeur totale</label>
+                  <span className="block text-sm font-medium text-gray-700">Valeur totale</span>
                   <p className="mt-1 text-sm text-gray-900">
                     {(selectedPart.currentStock * selectedPart.unitCost).toLocaleString('fr-FR')} FCFA
                   </p>
@@ -392,7 +392,7 @@ export default function InventoryManagement() {
 
               {selectedPart.description && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Description</label>
+                  <span className="block text-sm font-medium text-gray-700">Description</span>
                   <p className="mt-1 text-sm text-gray-900">{selectedPart.description}</p>
                 </div>
               )}
