@@ -12,8 +12,10 @@ import {
   Gauge,
   Bell,
   Menu,
-  X
+  X,
+  User
 } from 'lucide-react';
+import { useAuth } from './auth/AuthContext';
 
 interface NavigationProps {
   activeSection: string;
@@ -28,9 +30,11 @@ const navigationItems = [
   { id: 'analytics', label: 'Analyses', icon: BarChart3 },
   { id: 'inventory', label: 'Stock', icon: Package },
   { id: 'alerts', label: 'Alertes', icon: AlertTriangle },
+  { id: 'profile', label: 'Profil', icon: User },
 ];
 
 export default function Navigation({ activeSection, onSectionChange }: NavigationProps) {
+  const { user } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleSectionChange = (section: string) => {
@@ -47,7 +51,8 @@ export default function Navigation({ activeSection, onSectionChange }: Navigatio
             <Gauge className="h-8 w-8 text-blue-300" />
             <div>
               <h1 className="text-xl font-bold">GMAO</h1>
-              <p className="text-blue-300 text-sm">Industrie Cameroun</p>
+              <p className="text-blue-300 text-sm">Dangote Cement Cameroon</p>
+              <p className="text-blue-400 text-xs">Usine de Douala</p>
             </div>
           </div>
         </div>
@@ -82,8 +87,18 @@ export default function Navigation({ activeSection, onSectionChange }: Navigatio
 
         <div className="mt-8 pt-8 border-t border-blue-700">
           <div className="text-blue-300 text-sm">
-            <p className="font-medium">Usine de Transformation</p>
-            <p>Site de Douala - Cameroun</p>
+            {user ? (
+              <>
+                <p className="font-medium">{user.name}</p>
+                <p className="capitalize">{user.role} - {user.company}</p>
+                <p>{user.location}, Cameroun</p>
+              </>
+            ) : (
+              <>
+                <p className="font-medium">Usine de Transformation</p>
+                <p>Site de Douala - Cameroun</p>
+              </>
+            )}
           </div>
         </div>
       </nav>
@@ -94,7 +109,7 @@ export default function Navigation({ activeSection, onSectionChange }: Navigatio
           <Gauge className="h-6 w-6 text-blue-300" />
           <div>
             <h1 className="text-lg font-bold">GMAO</h1>
-            <p className="text-blue-300 text-xs">Industrie Cameroun</p>
+            <p className="text-blue-300 text-xs">Dangote Cement</p>
           </div>
         </div>
         <button
@@ -162,8 +177,18 @@ export default function Navigation({ activeSection, onSectionChange }: Navigatio
 
             <div className="mt-8 pt-8 border-t border-blue-700">
               <div className="text-blue-300 text-sm">
-                <p className="font-medium">Usine de Transformation</p>
-                <p>Site de Douala - Cameroun</p>
+                {user ? (
+                  <>
+                    <p className="font-medium">{user.name}</p>
+                    <p className="capitalize">{user.role} - {user.company}</p>
+                    <p>{user.location}, Cameroun</p>
+                  </>
+                ) : (
+                  <>
+                    <p className="font-medium">Usine de Transformation</p>
+                    <p>Site de Douala - Cameroun</p>
+                  </>
+                )}
               </div>
             </div>
           </div>

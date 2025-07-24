@@ -1,31 +1,54 @@
-# Application GMAO - Industrie Cameroun
+# Application GMAO - Dangote Cement Cameroon
 
-Une application web moderne de **Gestion de Maintenance Assistée par Ordinateur (GMAO)** spécialement conçue pour l'industrie camerounaise, avec un focus sur la maintenance préventive et la gestion optimisée des équipements industriels.
+Une application web moderne de **Gestion de Maintenance Assistée par Ordinateur (GMAO)** spécialement développée pour **Dangote Cement Cameroon**, leader de la production de ciment au Cameroun. Cette solution digitale optimise la maintenance préventive et la gestion des équipements de production cimentière sur notre site de Douala.
 
-## 🎯 Objectifs du Projet
+## 🏭 À propos de Dangote Cement Cameroon
 
-Cette application vise à améliorer la maintenance industrielle au Cameroun en offrant :
+**Dangote Cement Cameroon** est une filiale du groupe **Dangote Industries Limited**, le plus grand conglomérat industriel d'Afrique dirigé par Aliko Dangote. Notre usine ultramoderne de Douala, d'une capacité de production de **1,5 million de tonnes par an**, utilise les technologies les plus avancées pour produire du ciment de qualité supérieure conforme aux normes internationales.
 
-- **Suivi en temps réel** des performances des équipements
-- **Planification intelligente** des interventions de maintenance
-- **Gestion optimisée** des stocks de pièces de rechange
-- **Traçabilité complète** des interventions
-- **Analyse prédictive** pour anticiper les pannes
-- **Tableau de bord intuitif** pour une prise de décision éclairée
+### Notre Mission
+Fournir des matériaux de construction de haute qualité pour accompagner le développement infrastructurel du Cameroun et de la région Afrique Centrale, tout en maintenant les plus hauts standards de sécurité et de durabilité environnementale.
 
-## 🏗️ Architecture du Système
+## 🎯 Objectifs du Projet GMAO
 
-### Équipements Industriels Supervisés
+Cette application vise à optimiser les opérations industrielles chez Dangote Cement Cameroon en offrant :
 
-Le système couvre une large gamme d'équipements industriels adaptés au contexte camerounais :
+- **Surveillance en temps réel** des équipements de production de ciment (fours rotatifs, broyeurs, refroidisseurs)
+- **Maintenance préventive intelligente** adaptée aux process cimentiers de Dangote
+- **Optimisation de la disponibilité** des lignes de production pour maximiser le rendement
+- **Gestion avancée des stocks** de pièces de rechange spécifiques à l'industrie cimentière
+- **Traçabilité complète** des interventions sur équipements critiques
+- **Analyse prédictive** basée sur l'IA pour anticiper les arrêts non planifiés
+- **Tableaux de bord stratégiques** pour la direction et les équipes opérationnelles
+- **Conformité aux standards** de sécurité et qualité Dangote Group
 
-1. **Échangeurs de chaleur** - Refroidissement et gestion thermique
-2. **Tours de refroidissement** - Évacuation efficace de la chaleur
-3. **Systèmes de filtration** - Purification des fluides industriels
-4. **Pompes industrielles** - Circulation des fluides de process
-5. **Capteurs IoT** - Monitoring en temps réel (température, pression, débit, vibration)
-6. **Débitmètres** - Mesure et contrôle des débits de production
-7. **Équipements de transformation** - Broyeurs, mélangeurs, séparateurs
+## 🏗️ Architecture du Système - Dangote Cement Cameroon
+
+### Équipements Cimentiers Supervisés
+
+Le système couvre tous les équipements critiques de notre usine de production de ciment à Douala :
+
+**🔥 Ligne de Cuisson (Process Principal)**
+1. **Concasseurs primaires et secondaires** - Réduction calcaire et matières premières
+2. **Broyeurs à cru Pfeiffer** - Préparation mélange cru (calcaire, argile, latérite, minerai de fer)
+3. **Four rotatif FLSmidth 4.2x65m** - Cuisson clinker à 1450°C (capacité 5000 t/j)
+4. **Refroidisseur à clinker IKN** - Refroidissement rapide et récupération thermique
+5. **Préchauffeur cyclones 5 étages** - Préchauffage et précalcination
+
+**🏭 Ligne de Broyage Ciment**
+6. **Broyeur à ciment Gebr. Pfeiffer MVR** - Broyage clinker + gypse + ajouts (120 t/h)
+7. **Séparateur haute efficacité V-SEP** - Classification et finesse ciment
+8. **Silos de stockage ciment** - 4 silos de 3000 tonnes chacun
+
+**🚚 Conditionnement et Expédition**
+9. **Ensacheuses HAVER & BOECKER** - 8 becs, cadence 3000 sacs/h
+10. **Palettiseurs automatiques** - Palettisation et banderolage
+11. **Chargement vrac** - Système pneumatique pour camions-citernes
+
+**⚡ Utilités et Support**
+12. **Compresseurs d'air Atlas Copco** - Air service et instrumentation
+13. **Dépoussiéreurs INTENSIV-FILTER** - Contrôle émissions (< 10 mg/Nm³)
+14. **Transformateurs électriques** - Alimentation HT/MT (33kV/6.6kV)
 
 ### Technologies Utilisées
 
@@ -116,22 +139,32 @@ npm start
 - **Rouge:** États critiques et erreurs
 - **Gris:** Informations secondaires
 
-## 📊 Métriques et KPIs
+## 📊 Métriques et KPIs - Performance Dangote Cement
 
-### Indicateurs de Performance
-- **Disponibilité:** Pourcentage de temps opérationnel
-- **Fiabilité:** MTBF (Mean Time Between Failures)
-- **Efficacité:** OEE (Overall Equipment Effectiveness)
-- **Coûts:** Dépenses de maintenance vs budget
-- **Sécurité:** Incidents et quasi-accidents
+### Indicateurs Clés de Production Cimentière
+- **Disponibilité ligne de production:** Objectif > 90% (Standard Dangote Group)
+- **Production journalière:** Capacité maximale 4100 tonnes/jour ciment
+- **Consommation thermique:** < 3500 kJ/kg clinker (Benchmark mondial)
+- **Consommation électrique:** < 95 kWh/t ciment (Efficacité énergétique)
+- **Finesse ciment:** 3200-3800 cm²/g (Qualité Blaine)
+- **Émissions poussières:** < 10 mg/Nm³ (Conformité environnementale)
 
-### Alertes et Seuils
-- **Température:** Surveillance continue avec seuils d'alerte
-- **Pression:** Détection des variations anormales
-- **Débit:** Contrôle de la circulation des fluides
-- **Vibration:** Détection précoce des défaillances mécaniques
+### KPIs Maintenance Dangote
+- **MTBF Four rotatif:** > 2000 heures (Équipement critique)
+- **MTTR interventions:** < 4 heures (Réactivité maintenance)
+- **OEE global usine:** Objectif 85% (Overall Equipment Effectiveness)
+- **Coût maintenance/CA:** < 3% (Budget optimisé)
+- **Taux de sécurité:** 0 accident (Priorité absolue Dangote)
+
+### Alertes et Seuils Cimentiers
+- **Température four:** 1400-1500°C (Zone de cuisson optimale)
+- **Pression tirage:** -2 à 0 mbar (Contrôle combustion)
+- **Vibration broyeurs:** < 10 mm/s (Surveillance paliers)
+- **Finesse séparateur:** Contrôle résidu 32μm et Blaine
+- **Émissions NOx/SO2:** Surveillance continue conformité
 
 ---
 
-**Développé pour l'optimisation de la maintenance industrielle au Cameroun - Site de Douala**
-# gmao-maintenance
+**Application GMAO développée spécifiquement pour Dangote Cement Cameroon**  
+*Usine de Douala - Capacité 1,5 MT/an - Technologie FLSmidth/Pfeiffer*  
+*Groupe Dangote Industries Limited - Excellence Opérationnelle*

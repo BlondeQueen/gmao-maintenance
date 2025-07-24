@@ -1,4 +1,4 @@
-// Types pour le système de refroidissement GMAO
+// Types pour le système GMAO - Dangote Cement Cameroon
 
 export interface Equipment {
   id: string;
@@ -16,14 +16,26 @@ export interface Equipment {
 }
 
 export type EquipmentType = 
-  | 'EXCHANGER'      // Échangeur
-  | 'COOLING_TOWER'  // Tours de refroidissement  
-  | 'WATER_FILTER'   // Filtres à eau
-  | 'OIL_FILTER'     // Filtre à huiles
-  | 'WATER_PUMP'     // Pompes eau
-  | 'OIL_PUMP'       // Pompes huile
-  | 'SENSOR'         // Capteurs
-  | 'FLOW_METER';    // Débitmètre
+  | 'KILN'           // Four rotatif
+  | 'CEMENT_MILL'    // Broyeur à ciment
+  | 'RAW_MILL'       // Broyeur à cru
+  | 'CRUSHER'        // Concasseur
+  | 'BAG_FILTER'     // Filtre à manches
+  | 'CLINKER_COOLER' // Refroidisseur à clinker
+  | 'CONVEYOR'       // Convoyeur
+  | 'ELEVATOR'       // Élévateur
+  | 'SILO'           // Silo
+  | 'PACKER'         // Ensacheuse
+  | 'SEPARATOR'      // Séparateur
+  | 'COMPRESSOR'     // Compresseur
+  | 'EXCHANGER'      // Échangeur (legacy)
+  | 'COOLING_TOWER'  // Tours de refroidissement (legacy)
+  | 'WATER_FILTER'   // Filtres à eau (legacy)
+  | 'OIL_FILTER'     // Filtre à huiles (legacy)
+  | 'WATER_PUMP'     // Pompes eau (legacy)
+  | 'OIL_PUMP'       // Pompes huile (legacy)
+  | 'SENSOR'         // Capteurs (legacy)
+  | 'FLOW_METER';    // Débitmètre (legacy)
 
 export type EquipmentStatus = 
   | 'OPERATIONAL'    // Opérationnel
@@ -42,6 +54,13 @@ export interface EquipmentSpecifications {
   flowRate?: number;
   power?: number;
   voltage?: number;
+  diameter?: number;        // Diamètre (four, broyeur)
+  length?: number;          // Longueur (four, refroidisseur)
+  width?: number;           // Largeur (refroidisseur)
+  opening?: string;         // Ouverture (concasseur)
+  nbCompartments?: number;  // Nb compartiments (filtre)
+  nbBags?: number;          // Nb manches (filtre)
+  weight?: number;          // Poids (équipement)
   additionalSpecs?: Record<string, string | number | boolean>;
 }
 
@@ -153,7 +172,10 @@ export type KPICategory =
   | 'RELIABILITY'    // Fiabilité
   | 'EFFICIENCY'     // Efficacité
   | 'COST'          // Coût
-  | 'SAFETY';       // Sécurité
+  | 'SAFETY'        // Sécurité
+  | 'PRODUCTION'    // Production
+  | 'ENERGY'        // Énergie
+  | 'QUALITY';      // Qualité
 
 export interface Alert {
   id: string;

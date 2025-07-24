@@ -73,15 +73,22 @@ export default function Dashboard() {
 
   return (
     <div className="p-3 md:p-6 space-y-4 md:space-y-6">
-      {/* En-tête */}
-      <div className="bg-white rounded-lg shadow-md p-4 md:p-6">
-        <h1 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">
-          Tableau de Bord - Système Industriel
-        </h1>
-        <p className="text-gray-600">
-          Vue d&apos;ensemble du système de maintenance industrielle - Site de Douala
-        </p>
-        <div className="mt-4 text-sm text-gray-500">
+      {/* En-tête Dangote Cement Cameroon */}
+      <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-lg shadow-lg p-4 md:p-6 text-white">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+          <div>
+            <h1 className="text-xl md:text-2xl font-bold">Dangote Cement Cameroon</h1>
+            <p className="text-red-100 mt-1">Tableau de Bord GMAO - Usine de Douala</p>
+            <p className="text-red-200 text-sm mt-1">
+              Capacité: 1,5 MT/an • Production actuelle: {kpis.find(k => k.name.includes('Production'))?.value || 0} t/j
+            </p>
+          </div>
+          <div className="mt-4 md:mt-0 text-right">
+            <div className="text-red-100 text-sm">Groupe Dangote Industries</div>
+            <div className="text-red-200 text-xs">Excellence Opérationnelle</div>
+          </div>
+        </div>
+        <div className="mt-4 text-sm text-red-200">
           Dernière mise à jour: {format(systemData.lastSystemCheck, 'dd MMMM yyyy à HH:mm', { locale: fr })}
         </div>
       </div>
