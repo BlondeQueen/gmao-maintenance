@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 import MaintenanceForm from './forms/MaintenanceForm';
 import { MaintenanceRecord, MaintenanceType, MaintenanceStatus, Priority } from '../types';
-import { format, addDays } from 'date-fns';
+import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { useData } from '../contexts/DataContext';
 

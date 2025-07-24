@@ -36,7 +36,7 @@ interface EquipmentDetailsProps {
 }
 
 export default function EquipmentManagement() {
-  const { state, addEquipment, updateEquipment, deleteEquipment } = useData();
+  const { state, deleteEquipment } = useData();
   const equipments = state.equipments;
   const [selectedEquipment, setSelectedEquipment] = useState<Equipment | null>(null);
   const [editingEquipment, setEditingEquipment] = useState<Equipment | null>(null);
