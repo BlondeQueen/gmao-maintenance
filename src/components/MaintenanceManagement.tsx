@@ -17,71 +17,14 @@ import {
   TrendingUp,
   Coins
 } from 'lucide-react';
-import { mockEquipments } from '../data/mockData';
 import MaintenanceForm from './forms/MaintenanceForm';
 import { MaintenanceRecord, MaintenanceType, MaintenanceStatus, Priority } from '../types';
 import { format, addDays } from 'date-fns';
 import { fr } from 'date-fns/locale';
-
-// Données simulées pour les ordres de maintenance
-const mockMaintenanceOrders: MaintenanceRecord[] = [
-  {
-    id: 'WO001',
-    equipmentId: 'EQ001',
-    type: 'PREVENTIVE',
-    status: 'SCHEDULED',
-    scheduledDate: addDays(new Date(), 7),
-    technician: 'Paul Mbarga',
-    description: 'Remplacement des joints et nettoyage de l\'échangeur',
-    workOrder: 'WO-2025-001',
-    duration: 4,
-    cost: 275000,
-    partsUsed: [
-      { partId: 'SP001', partName: 'Joint échangeur', quantity: 2, unitCost: 92000, totalCost: 184000 }
-    ],
-    priority: 'MEDIUM',
-    notes: 'Prévoir arrêt système 4h le dimanche matin'
-  },
-  {
-    id: 'WO002',
-    equipmentId: 'EQ004',
-    type: 'CORRECTIVE',
-    status: 'IN_PROGRESS',
-    scheduledDate: new Date(),
-    actualDate: new Date(),
-    technician: 'Célestine Ngouma',
-    description: 'Remplacement cartouche filtre à huile - Pression critique',
-    workOrder: 'WO-2025-002',
-    duration: 2,
-    cost: 113000,
-    partsUsed: [
-      { partId: 'SP002', partName: 'Cartouche filtre huile', quantity: 1, unitCost: 52000, totalCost: 52000 }
-    ],
-    priority: 'CRITICAL',
-    failureMode: 'Colmatage filtre',
-    rootCause: 'Dépassement intervalle de maintenance'
-  },
-  {
-    id: 'WO003',
-    equipmentId: 'EQ003',
-    type: 'PREDICTIVE',
-    status: 'COMPLETED',
-    scheduledDate: addDays(new Date(), -3),
-    actualDate: addDays(new Date(), -3),
-    completedDate: addDays(new Date(), -2),
-    technician: 'Emmanuel Biya',
-    description: 'Contrôle vibratoire et alignement pompe',
-    workOrder: 'WO-2025-003',
-    duration: 3,
-    cost: 196000,
-    partsUsed: [],
-    priority: 'MEDIUM',
-    notes: 'Vibrations dans les normes, alignement OK'
-  }
-];
+import { useData } from '../contexts/DataContext';
 
 export default function MaintenanceManagement() {
-  const [maintenanceOrders] = useState(mockMaintenanceOrders);
+  const { state, addIntervention, updateIntervention } = useData();
   const [filterType, setFilterType] = useState<MaintenanceType | 'ALL'>('ALL');
   const [filterStatus, setFilterStatus] = useState<MaintenanceStatus | 'ALL'>('ALL');
   const [filterPriority, setFilterPriority] = useState<Priority | 'ALL'>('ALL');
@@ -91,8 +34,8 @@ export default function MaintenanceManagement() {
   const [editingMaintenance, setEditingMaintenance] = useState<MaintenanceRecord | null>(null);
 
   // Filtrage des ordres
-  const filteredOrders = maintenanceOrders.filter(order => {
-    const equipment = mockEquipments.find(eq => eq.id === order.equipmentId);
+  const filteredOrders = state.maintenanceRecords.filter(order => {
+    const equipment = state.equipments.find(eq => eq.id === order.equipmentId);
     const equipmentName = equipment?.name || '';
     
     const matchesType = filterType === 'ALL' || order.type === filterType;
@@ -107,15 +50,17 @@ export default function MaintenanceManagement() {
 
   // Statistiques
   const stats = {
-    total: maintenanceOrders.length,
-    scheduled: maintenanceOrders.filter(o => o.status === 'SCHEDULED').length,
-    inProgress: maintenanceOrders.filter(o => o.status === 'IN_PROGRESS').length,
-    completed: maintenanceOrders.filter(o => o.status === 'COMPLETED').length,
-    overdue: maintenanceOrders.filter(o => 
+    total: state.maintenanceRecords.length,
+    scheduled: state.maintenanceRecords.filter(o => o.status === 'SCHEDULED').length,
+    inProgress: state.maintenanceRecords.filter(o => o.status === 'IN_PROGRESS').length,
+    completed: state.maintenanceRecords.filter(o => o.status === 'COMPLETED').length,
+    overdue: state.maintenanceRecords.filter(o => 
       o.status === 'SCHEDULED' && new Date(o.scheduledDate) < new Date()
     ).length,
-    totalCost: maintenanceOrders.reduce((sum, o) => sum + o.cost, 0),
-    avgDuration: maintenanceOrders.reduce((sum, o) => sum + o.duration, 0) / maintenanceOrders.length
+    totalCost: state.maintenanceRecords.reduce((sum, o) => sum + o.cost, 0),
+    avgDuration: state.maintenanceRecords.length > 0 
+      ? state.maintenanceRecords.reduce((sum, o) => sum + o.duration, 0) / state.maintenanceRecords.length 
+      : 0
   };
 
   // Gestion des maintenances
@@ -143,11 +88,41 @@ export default function MaintenanceManagement() {
     cost?: number;
     status?: string;
   }) => {
-    console.log('Nouvelle maintenance:', maintenanceData);
-    // Ici, on sauvegarderait normalement dans une base de données
-    alert('Maintenance sauvegardée avec succès !');
-    setShowMaintenanceForm(false);
-    setEditingMaintenance(null);
+    try {
+      const maintenanceRecord: MaintenanceRecord = {
+        id: maintenanceData.id || `WO-${Date.now()}`,
+        equipmentId: maintenanceData.equipmentId,
+        type: maintenanceData.type,
+        status: (maintenanceData.status as MaintenanceStatus) || 'SCHEDULED',
+        scheduledDate: new Date(maintenanceData.scheduledDate),
+        technician: maintenanceData.technician,
+        description: maintenanceData.description || maintenanceData.title,
+        workOrder: `WO-${maintenanceData.id || Date.now()}`,
+        duration: maintenanceData.duration,
+        cost: maintenanceData.cost || 0,
+        partsUsed: [],
+        priority: maintenanceData.priority,
+        notes: maintenanceData.description,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+
+      if (editingMaintenance) {
+        // Mise à jour d'une maintenance existante
+        updateIntervention(maintenanceRecord);
+        console.log('Maintenance mise à jour:', maintenanceRecord);
+      } else {
+        // Création d'une nouvelle maintenance
+        addIntervention(maintenanceRecord);
+        console.log('Nouvelle maintenance créée:', maintenanceRecord);
+      }
+
+      setShowMaintenanceForm(false);
+      setEditingMaintenance(null);
+    } catch (error) {
+      console.error('Erreur lors de la sauvegarde de la maintenance:', error);
+      alert('Erreur lors de la sauvegarde. Veuillez réessayer.');
+    }
   };
 
   const closeMaintenanceForm = () => {
@@ -233,7 +208,7 @@ export default function MaintenanceManagement() {
   );
 
   const MaintenanceCard = ({ order }: { order: MaintenanceRecord }) => {
-    const equipment = mockEquipments.find(eq => eq.id === order.equipmentId);
+    const equipment = state.equipments.find(eq => eq.id === order.equipmentId);
     const typeInfo = getTypeInfo(order.type);
     const statusInfo = getStatusInfo(order.status);
     const priorityInfo = getPriorityInfo(order.priority);
@@ -464,7 +439,7 @@ export default function MaintenanceManagement() {
                     Ordre de Travail {selectedOrder.workOrder}
                   </h2>
                   <p className="text-gray-600">
-                    {mockEquipments.find(eq => eq.id === selectedOrder.equipmentId)?.name}
+                    {state.equipments.find(eq => eq.id === selectedOrder.equipmentId)?.name}
                   </p>
                 </div>
                 <button

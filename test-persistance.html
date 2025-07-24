@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Persistance GMAO</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .btn-secondary {
+            background: #6c757d;
+        }
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+        .intervention-item {
+            background: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border-left: 4px solid #007bff;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎯 Test de Persistance - GMAO Cameroun</h1>
+    
+    <div class="container">
+        <h2>📝 Créer une Intervention</h2>
+        <form id="interventionForm">
+            <div class="form-group">
+                <label for="title">Titre de l'intervention *</label>
+                <input type="text" id="title" required placeholder="Ex: Maintenance préventive">
+            </div>
+            
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" rows="3" placeholder="Description détaillée..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="technician">Technicien *</label>
+                <select id="technician" required>
+                    <option value="">Sélectionner un technicien</option>
+                    <option value="Mamadou Diallo">Mamadou Diallo</option>
+                    <option value="Aminata Fofana">Aminata Fofana</option>
+                    <option value="Jean-Baptiste Nkomo">Jean-Baptiste Nkomo</option>
+                    <option value="André Toko">André Toko</option>
+                    <option value="Clarisse Mballa">Clarisse Mballa</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="priority">Priorité</label>
+                <select id="priority">
+                    <option value="LOW">Basse</option>
+                    <option value="MEDIUM" selected>Moyenne</option>
+                    <option value="HIGH">Haute</option>
+                    <option value="URGENT">Urgente</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="type">Type d'intervention</label>
+                <select id="type">
+                    <option value="PREVENTIVE" selected>Préventive</option>
+                    <option value="CORRECTIVE">Corrective</option>
+                    <option value="URGENT">Urgente</option>
+                    <option value="INSPECTION">Inspection</option>
+                </select>
+            </div>
+            
+            <button type="submit">💾 Sauvegarder</button>
+            <button type="button" onclick="clearStorage()" class="btn-secondary">🗑️ Vider le stockage</button>
+            <button type="button" onclick="loadInterventions()" class="btn-secondary">🔄 Recharger</button>
+        </form>
+    </div>
+    
+    <div class="container">
+        <h2>📋 Interventions Sauvegardées</h2>
+        <div id="interventionsList">
+            <!-- Les interventions apparaîtront ici -->
+        </div>
+    </div>
+    
+    <div class="container">
+        <h2>🔧 Informations Techniques</h2>
+        <p><strong>localStorage Support:</strong> <span id="localStorageSupport"></span></p>
+        <p><strong>Données stockées:</strong> <span id="storageInfo"></span></p>
+        <div id="debugInfo"></div>
+    </div>
+
+    <script>
+        // Vérification du support localStorage
+        function checkLocalStorageSupport() {
+            try {
+                const test = 'test';
+                localStorage.setItem(test, test);
+                localStorage.removeItem(test);
+                document.getElementById('localStorageSupport').textContent = '✅ Supporté';
+                return true;
+            } catch(e) {
+                document.getElementById('localStorageSupport').textContent = '❌ Non supporté';
+                return false;
+            }
+        }
+
+        // Sauvegarde d'une intervention
+        function saveIntervention(intervention) {
+            try {
+                let interventions = JSON.parse(localStorage.getItem('gmao_interventions_test') || '[]');
+                intervention.id = 'INT-' + Date.now();
+                intervention.createdAt = new Date().toISOString();
+                intervention.updatedAt = new Date().toISOString();
+                
+                interventions.push(intervention);
+                localStorage.setItem('gmao_interventions_test', JSON.stringify(interventions));
+                
+                console.log('Intervention sauvegardée:', intervention);
+                showMessage('✅ Intervention sauvegardée avec succès!', 'success');
+                return true;
+            } catch (error) {
+                console.error('Erreur sauvegarde:', error);
+                showMessage('❌ Erreur lors de la sauvegarde: ' + error.message, 'error');
+                return false;
+            }
+        }
+
+        // Chargement des interventions
+        function loadInterventions() {
+            try {
+                const interventions = JSON.parse(localStorage.getItem('gmao_interventions_test') || '[]');
+                const listContainer = document.getElementById('interventionsList');
+                
+                if (interventions.length === 0) {
+                    listContainer.innerHTML = '<p>Aucune intervention sauvegardée</p>';
+                    return;
+                }
+                
+                listContainer.innerHTML = interventions.map(intervention => `
+                    <div class="intervention-item">
+                        <h4>${intervention.title}</h4>
+                        <p><strong>Technicien:</strong> ${intervention.technician}</p>
+                        <p><strong>Priorité:</strong> ${intervention.priority}</p>
+                        <p><strong>Type:</strong> ${intervention.type}</p>
+                        <p><strong>Description:</strong> ${intervention.description || 'Aucune'}</p>
+                        <p><strong>Créé le:</strong> ${new Date(intervention.createdAt).toLocaleString('fr-FR')}</p>
+                        <p><strong>ID:</strong> ${intervention.id}</p>
+                    </div>
+                `).join('');
+                
+                updateStorageInfo();
+            } catch (error) {
+                console.error('Erreur chargement:', error);
+                showMessage('❌ Erreur lors du chargement: ' + error.message, 'error');
+            }
+        }
+
+        // Vider le stockage
+        function clearStorage() {
+            if (confirm('Êtes-vous sûr de vouloir supprimer toutes les interventions?')) {
+                localStorage.removeItem('gmao_interventions_test');
+                loadInterventions();
+                showMessage('🗑️ Stockage vidé', 'success');
+            }
+        }
+
+        // Afficher un message
+        function showMessage(message, type) {
+            const existingMessage = document.querySelector('.success, .error');
+            if (existingMessage) {
+                existingMessage.remove();
+            }
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = type;
+            messageDiv.textContent = message;
+            
+            const form = document.getElementById('interventionForm');
+            form.parentNode.insertBefore(messageDiv, form);
+            
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 3000);
+        }
+
+        // Mise à jour des infos de stockage
+        function updateStorageInfo() {
+            try {
+                const interventions = JSON.parse(localStorage.getItem('gmao_interventions_test') || '[]');
+                document.getElementById('storageInfo').textContent = 
+                    `${interventions.length} intervention(s) - ${JSON.stringify(interventions).length} caractères`;
+                
+                document.getElementById('debugInfo').innerHTML = `
+                    <h4>Données brutes:</h4>
+                    <pre style="background: #f8f9fa; padding: 10px; border-radius: 4px; overflow-x: auto; font-size: 12px;">
+${JSON.stringify(interventions, null, 2)}
+                    </pre>
+                `;
+            } catch (error) {
+                document.getElementById('storageInfo').textContent = 'Erreur: ' + error.message;
+            }
+        }
+
+        // Gestionnaire de soumission du formulaire
+        document.getElementById('interventionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const intervention = {
+                title: document.getElementById('title').value,
+                description: document.getElementById('description').value,
+                technician: document.getElementById('technician').value,
+                priority: document.getElementById('priority').value,
+                type: document.getElementById('type').value
+            };
+            
+            if (saveIntervention(intervention)) {
+                this.reset();
+                loadInterventions();
+            }
+        });
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            checkLocalStorageSupport();
+            loadInterventions();
+            updateStorageInfo();
+        });
+    </script>
+</body>
+</html>

@@ -86,6 +86,8 @@ export interface MaintenanceRecord {
   priority: Priority;
   failureMode?: string;
   rootCause?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export type MaintenanceType = 
@@ -130,6 +132,8 @@ export interface SparePart {
   equipmentCompatibility: string[];
   lastOrderDate?: Date;
   leadTime: number; // jours
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface KPI {

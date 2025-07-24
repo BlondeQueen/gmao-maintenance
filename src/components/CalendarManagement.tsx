@@ -12,11 +12,12 @@ import {
   AlertCircle,
   Settings
 } from 'lucide-react';
-import { mockMaintenanceRecords, mockEquipments } from '../data/mockData';
 import { MaintenanceType, Priority } from '../types';
 import { format, addDays, startOfWeek, endOfWeek, isSameDay, isToday } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import InterventionForm from './forms/InterventionForm';
+import { useData } from '../contexts/DataContext';
+import { convertInterventionToMaintenanceRecord } from '../utils/dataConverters';
 
 interface Intervention {
   id?: string;
@@ -46,6 +47,7 @@ interface CalendarEvent {
 }
 
 export default function CalendarManagement() {
+  const { state, addIntervention, updateIntervention } = useData();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -56,8 +58,8 @@ export default function CalendarManagement() {
   const [editingIntervention, setEditingIntervention] = useState<CalendarEvent | null>(null);
 
   // Conversion des données de maintenance en événements de calendrier
-  const events: CalendarEvent[] = mockMaintenanceRecords.map(record => {
-    const equipment = mockEquipments.find(eq => eq.id === record.equipmentId);
+  const events: CalendarEvent[] = state.maintenanceRecords.map(record => {
+    const equipment = state.equipments.find(eq => eq.id === record.equipmentId);
     return {
       id: record.id,
       title: `${record.type} - ${equipment?.name || 'Équipement inconnu'}`,
@@ -124,11 +126,30 @@ export default function CalendarManagement() {
   };
 
   const handleSubmitIntervention = async (interventionData: Intervention) => {
-    console.log('Nouvelle intervention:', interventionData);
-    // Ici, on sauvegarderait normalement dans une base de données
-    alert('Intervention sauvegardée avec succès !');
-    setShowInterventionForm(false);
-    setEditingIntervention(null);
+    try {
+      console.log('🎯 Tentative de sauvegarde intervention:', interventionData);
+
+      // Convertir et sauvegarder dans le contexte
+      const maintenanceRecord = convertInterventionToMaintenanceRecord(interventionData);
+      
+      if (editingIntervention) {
+        updateIntervention(maintenanceRecord);
+        console.log('✅ Intervention mise à jour avec succès');
+      } else {
+        addIntervention(maintenanceRecord);
+        console.log('✅ Nouvelle intervention sauvegardée avec succès');
+      }
+
+      setShowInterventionForm(false);
+      setEditingIntervention(null);
+      
+      // Afficher un message de succès
+      alert('✅ Intervention sauvegardée avec succès!\n\nVous pouvez vérifier en:\n1. Rafraîchissant la page\n2. Ouvrant les DevTools > Application > Local Storage');
+      
+    } catch (error) {
+      console.error('❌ Erreur lors de la sauvegarde:', error);
+      alert('❌ Erreur lors de la sauvegarde. Vérifiez la console pour plus de détails.');
+    }
   };
 
   const closeInterventionForm = () => {
@@ -175,7 +196,7 @@ export default function CalendarManagement() {
           </p>
         </div>
         <button 
-          className="mt-4 sm:mt-0 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center"
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center"
           onClick={handleCreateIntervention}
           title="Créer une nouvelle intervention"
         >

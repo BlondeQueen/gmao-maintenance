@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Save, Plus, Trash2 } from 'lucide-react';
 import { Equipment, EquipmentType, EquipmentStatus, Sensor, SensorType } from '../../types';
-// import { useAppContext } from '../../context/AppContext';
+import { useData } from '../../contexts/DataContext';
 
 interface EquipmentFormProps {
   equipment?: Equipment;
@@ -42,13 +42,7 @@ const sensorTypes: { value: SensorType; label: string }[] = [
 ];
 
 export default function EquipmentForm({ equipment, isOpen, onClose, onSuccess }: EquipmentFormProps) {
-  // const { addEquipment, updateEquipment, getEquipment } = useAppContext();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const addEquipment = (eq: any) => { console.log('Add equipment:', eq); return 'EQ001'; };
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const updateEquipment = (id: string, eq: any) => { console.log('Update equipment:', id, eq); return true; };
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const getEquipment = (id: string) => undefined;
+  const { addEquipment, updateEquipment } = useData();
   const [isSubmitting, setIsSubmitting] = useState(false);
   
   // Données de base de l'équipement
@@ -170,7 +164,8 @@ export default function EquipmentForm({ equipment, isOpen, onClose, onSuccess }:
     setIsSubmitting(true);
     
     try {
-      const equipmentData: Omit<Equipment, 'id'> = {
+      const equipmentData: Equipment = {
+        id: equipment?.id || `EQ-${Date.now()}`,
         name: formData.name,
         type: formData.type,
         status: formData.status,
@@ -198,24 +193,23 @@ export default function EquipmentForm({ equipment, isOpen, onClose, onSuccess }:
       };
 
       if (equipment) {
-        // Modification
-        updateEquipment(equipment.id, equipmentData);
-        const updatedEquipment = getEquipment(equipment.id);
-        if (updatedEquipment && onSuccess) {
-          onSuccess(updatedEquipment);
-        }
+        // Modification d'un équipement existant
+        updateEquipment(equipmentData);
+        console.log('Équipement modifié:', equipmentData);
       } else {
-        // Ajout
-        const newId = addEquipment(equipmentData);
-        const newEquipment = getEquipment(newId);
-        if (newEquipment && onSuccess) {
-          onSuccess(newEquipment);
-        }
+        // Ajout d'un nouvel équipement
+        addEquipment(equipmentData);
+        console.log('Nouvel équipement créé:', equipmentData);
+      }
+      
+      if (onSuccess) {
+        onSuccess(equipmentData);
       }
       
       onClose();
     } catch (error) {
-      console.error('Erreur lors de la sauvegarde:', error);
+      console.error('Erreur lors de la sauvegarde de l\'équipement:', error);
+      alert('Erreur lors de la sauvegarde. Veuillez réessayer.');
     } finally {
       setIsSubmitting(false);
     }

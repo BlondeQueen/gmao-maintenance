@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { X, Save } from 'lucide-react';
-import { mockEquipments } from '../../data/mockData';
+import { useData } from '../../contexts/DataContext';
 
 interface Intervention {
   id?: string;
@@ -27,6 +27,7 @@ interface InterventionFormProps {
 }
 
 export default function InterventionForm({ isOpen, onClose, onSubmit, intervention }: InterventionFormProps) {
+  const { state } = useData();
   const [formData, setFormData] = useState({
     title: intervention?.title || '',
     description: intervention?.description || '',
@@ -108,7 +109,7 @@ export default function InterventionForm({ isOpen, onClose, onSubmit, interventi
                   required
                 >
                   <option value="">Sélectionner un équipement</option>
-                  {mockEquipments.map((eq) => (
+                  {state.equipments.map((eq) => (
                     <option key={eq.id} value={eq.id}>
                       {eq.name} - {eq.location}
                     </option>

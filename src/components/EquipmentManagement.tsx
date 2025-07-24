@@ -20,8 +20,7 @@ import {
   Info
 } from 'lucide-react';
 import { Equipment, EquipmentStatus, SensorType } from '../types';
-import { mockEquipments } from '../data/mockData';
-// import { useAppContext } from '../context/AppContext';
+import { useData } from '../contexts/DataContext';
 import EquipmentForm from './forms/EquipmentForm';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
@@ -37,12 +36,8 @@ interface EquipmentDetailsProps {
 }
 
 export default function EquipmentManagement() {
-  // const { equipments, deleteEquipment } = useAppContext();
-  const equipments = mockEquipments; // Utilisation temporaire des données mock
-  const deleteEquipment = (id: string) => {
-    console.log('Suppression équipement:', id);
-    // Fonction temporaire - sera remplacée par le contexte
-  };
+  const { state, addEquipment, updateEquipment, deleteEquipment } = useData();
+  const equipments = state.equipments;
   const [selectedEquipment, setSelectedEquipment] = useState<Equipment | null>(null);
   const [editingEquipment, setEditingEquipment] = useState<Equipment | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);

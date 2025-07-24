@@ -12,11 +12,13 @@ import {
   TrendingDown,
   BarChart3
 } from 'lucide-react';
-import { mockSpareParts } from '../data/mockData';
 import { SparePart } from '../types';
 import PartForm from './forms/PartForm';
+import { useData } from '../contexts/DataContext';
+import { convertPartFormToSparePart, PartFormData } from '../utils/dataConverters';
 
 export default function InventoryManagement() {
+  const { state, addPart, updatePart } = useData();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('ALL');
   const [categoryFilter, setCategoryFilter] = useState<string>('ALL');
@@ -26,7 +28,7 @@ export default function InventoryManagement() {
   const [editingPart, setEditingPart] = useState<SparePart | null>(null);
 
   // Filtrage des pièces
-  const filteredParts = mockSpareParts.filter(part => {
+  const filteredParts = state.spareParts.filter(part => {
     const matchesSearch = part.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          part.partNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          part.supplier.toLowerCase().includes(searchTerm.toLowerCase());
@@ -42,12 +44,12 @@ export default function InventoryManagement() {
   });
 
   // Statistiques
-  const totalParts = mockSpareParts.length;
-  const lowStockParts = mockSpareParts.filter(part => part.currentStock <= part.minStock);
-  const outOfStockParts = mockSpareParts.filter(part => part.currentStock === 0);
-  const totalValue = mockSpareParts.reduce((sum, part) => sum + (part.currentStock * part.unitCost), 0);
+  const totalParts = state.spareParts.length;
+  const lowStockParts = state.spareParts.filter(part => part.currentStock <= part.minStock);
+  const outOfStockParts = state.spareParts.filter(part => part.currentStock === 0);
+  const totalValue = state.spareParts.reduce((sum, part) => sum + (part.currentStock * part.unitCost), 0);
 
-  const categories = Array.from(new Set(mockSpareParts.map(part => part.category)));
+  const categories = Array.from(new Set(state.spareParts.map(part => part.category)));
 
   const getStockStatus = (part: SparePart) => {
     if (part.currentStock === 0) return { status: 'Rupture', color: 'text-red-600 bg-red-100' };
@@ -78,11 +80,44 @@ export default function InventoryManagement() {
   };
 
   const handleSubmitPart = async (partData: Partial<SparePart>) => {
-    console.log('Nouvelle pièce:', partData);
-    // Ici, on sauvegarderait normalement dans une base de données
-    alert('Pièce sauvegardée avec succès !');
-    setShowPartForm(false);
-    setEditingPart(null);
+    try {
+      // Conversion des données du formulaire vers SparePart
+      const fullPartData: PartFormData = {
+        id: partData.id,
+        name: partData.name || '',
+        partNumber: partData.partNumber || '',
+        description: partData.description || '',
+        category: partData.category || '',
+        supplier: partData.supplier || '',
+        unitCost: partData.unitCost || 0,
+        currentStock: partData.currentStock || 0,
+        minStock: partData.minStock || 0,
+        maxStock: partData.maxStock || 0,
+        reorderPoint: partData.reorderPoint || 0,
+        unit: partData.unit || '',
+        location: partData.location || '',
+        equipmentCompatibility: partData.equipmentCompatibility || [],
+        leadTime: partData.leadTime || 0
+      };
+
+      if (editingPart) {
+        // Mise à jour d'une pièce existante
+        const updatedPart = { ...partData, updatedAt: new Date() } as SparePart;
+        updatePart(updatedPart);
+        console.log('Pièce mise à jour:', updatedPart);
+      } else {
+        // Création d'une nouvelle pièce
+        const newPart = convertPartFormToSparePart(fullPartData);
+        addPart(newPart);
+        console.log('Nouvelle pièce créée:', newPart);
+      }
+
+      setShowPartForm(false);
+      setEditingPart(null);
+    } catch (error) {
+      console.error('Erreur lors de la sauvegarde de la pièce:', error);
+      alert('Erreur lors de la sauvegarde. Veuillez réessayer.');
+    }
   };
 
   const closePartForm = () => {
