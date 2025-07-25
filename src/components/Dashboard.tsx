@@ -16,6 +16,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { mockSystemOverview, mockKPIs, mockPerformanceData, mockAlerts, mockEquipments } from '../data/mockData';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
+import DangoteLogo from './DangoteLogo';
 
 export default function Dashboard() {
   const systemData = mockSystemOverview;
@@ -76,12 +77,15 @@ export default function Dashboard() {
       {/* En-tête Dangote Cement Cameroon */}
       <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-lg shadow-lg p-4 md:p-6 text-white">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-          <div>
-            <h1 className="text-xl md:text-2xl font-bold">Dangote Cement Cameroon</h1>
-            <p className="text-red-100 mt-1">Tableau de Bord GMAO - Usine de Douala</p>
-            <p className="text-red-200 text-sm mt-1">
-              Capacité: 1,5 MT/an • Production actuelle: {kpis.find(k => k.name.includes('Production'))?.value || 0} t/j
-            </p>
+          <div className="flex items-center gap-4">
+            <DangoteLogo size="lg" showText={false} className="flex-shrink-0" />
+            <div>
+              <h1 className="text-xl md:text-2xl font-bold">Dangote Cement Cameroon</h1>
+              <p className="text-red-100 mt-1">Tableau de Bord GMAO - Usine de Douala</p>
+              <p className="text-red-200 text-sm mt-1">
+                Capacité: 1,5 MT/an • Production actuelle: {kpis.find(k => k.name.includes('Production'))?.value || 0} t/j
+              </p>
+            </div>
           </div>
           <div className="mt-4 md:mt-0 text-right">
             <div className="text-red-100 text-sm">Groupe Dangote Industries</div>

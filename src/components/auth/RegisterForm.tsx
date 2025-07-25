@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { User, Mail, Lock, Building, MapPin, Eye, EyeOff, UserPlus, ArrowLeft } from 'lucide-react';
 import { useAuth } from './AuthContext';
+import DangoteLogo from '../DangoteLogo';
 
 interface RegisterFormProps {
   onSwitchToLogin: () => void;
@@ -84,8 +85,8 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-8">
         {/* Header Dangote */}
         <div className="text-center mb-8">
-          <div className="bg-gradient-to-r from-red-600 to-red-700 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-            <UserPlus className="w-10 h-10 text-white" />
+          <div className="flex justify-center mb-4">
+            <DangoteLogo size="lg" showText={false} />
           </div>
           <h1 className="text-2xl font-bold text-gray-900 mb-1">Dangote Cement Cameroon</h1>
           <h2 className="text-lg font-semibold text-red-600 mb-2">Nouveau Collaborateur</h2>

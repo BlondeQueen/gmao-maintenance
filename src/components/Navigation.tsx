@@ -16,6 +16,7 @@ import {
   User
 } from 'lucide-react';
 import { useAuth } from './auth/AuthContext';
+import DangoteLogo from './DangoteLogo';
 
 interface NavigationProps {
   activeSection: string;
@@ -48,7 +49,7 @@ export default function Navigation({ activeSection, onSectionChange }: Navigatio
       <nav className="hidden lg:flex bg-blue-900 text-white w-64 min-h-screen p-4 flex-col">
         <div className="mb-8">
           <div className="flex items-center space-x-3">
-            <Gauge className="h-8 w-8 text-blue-300" />
+            <DangoteLogo size="md" showText={false} />
             <div>
               <h1 className="text-xl font-bold">GMAO</h1>
               <p className="text-blue-300 text-sm">Dangote Cement Cameroon</p>
