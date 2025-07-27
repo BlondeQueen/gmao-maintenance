@@ -50,7 +50,6 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
     if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = 'Les mots de passe ne correspondent pas';
     }
-    if (!formData.company.trim()) newErrors.company = 'Entreprise requise';
     if (!formData.location) newErrors.location = 'Localisation requise';
 
     if (Object.keys(newErrors).length > 0) {
@@ -149,30 +148,7 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
             {errors.email && <p className="text-red-600 text-sm mt-1">{errors.email}</p>}
           </div>
 
-          {/* Company */}
-          <div>
-            <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-2">
-              Entreprise
-            </label>
-            <div className="relative">
-              <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <input
-                type="text"
-                id="company"
-                name="company"
-                value="Dangote Cement Cameroon"
-                onChange={handleChange}
-                className={`w-full pl-11 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent bg-gray-50 ${
-                  errors.company ? 'border-red-300' : 'border-gray-300'
-                }`}
-                placeholder="Dangote Cement Cameroon"
-                readOnly
-                disabled={isLoading}
-              />
-            </div>
-            {errors.company && <p className="text-red-600 text-sm mt-1">{errors.company}</p>}
-          </div>
-
+         
           {/* Location */}
           <div>
             <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-2">

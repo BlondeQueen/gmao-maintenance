@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Authentification GMAO</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .account { background: #f5f5f5; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+        #result { background: #e7f3ff; padding: 10px; margin: 10px 0; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Test du Système d'Authentification GMAO</h1>
+    
+    <h2>Comptes de test disponibles :</h2>
+    <div class="account">
+        <strong>Admin :</strong> admin@dangote-cement.cm / admin123<br>
+        <button onclick="testLogin('admin@dangote-cement.cm', 'admin123')">Tester connexion Admin</button>
+    </div>
+    
+    <div class="account">
+        <strong>Maintenance :</strong> maintenance@dangote-cement.cm / maint123<br>
+        <button onclick="testLogin('maintenance@dangote-cement.cm', 'maint123')">Tester connexion Maintenance</button>
+    </div>
+    
+    <div class="account">
+        <strong>Production :</strong> production@dangote-cement.cm / prod123<br>
+        <button onclick="testLogin('production@dangote-cement.cm', 'prod123')">Tester connexion Production</button>
+    </div>
+    
+    <div class="account">
+        <strong>Opérateur :</strong> operateur@dangote-cement.cm / oper123<br>
+        <button onclick="testLogin('operateur@dangote-cement.cm', 'oper123')">Tester connexion Opérateur</button>
+    </div>
+    
+    <div class="account">
+        <strong>Technicien Four :</strong> kiln-tech@dangote-cement.cm / kiln123<br>
+        <button onclick="testLogin('kiln-tech@dangote-cement.cm', 'kiln123')">Tester connexion Technicien Four</button>
+    </div>
+    
+    <button onclick="initializeData()">Initialiser les données de test</button>
+    <button onclick="clearData()">Effacer toutes les données</button>
+    <button onclick="showStoredData()">Voir les données stockées</button>
+    
+    <div id="result"></div>
+
+    <script>
+        // Données de démonstration
+        const demoUsers = [
+            {
+                id: 'USER-ADMIN-001',
+                email: 'admin@dangote-cement.cm',
+                password: 'admin123',
+                name: 'Marie-Claire Ondoa',
+                role: 'admin',
+                company: 'Dangote Cement Cameroon',
+                location: 'Douala',
+                createdAt: '2024-01-15T08:00:00.000Z',
+                lastLogin: '2025-07-24T14:30:00.000Z'
+            },
+            {
+                id: 'USER-TECH-001',
+                email: 'maintenance@dangote-cement.cm',
+                password: 'maint123',
+                name: 'Paul Mbarga',
+                role: 'technician',
+                company: 'Dangote Cement Cameroon',
+                location: 'Douala',
+                createdAt: '2024-02-01T09:15:00.000Z',
+                lastLogin: '2025-07-24T08:45:00.000Z'
+            },
+            {
+                id: 'USER-MANAGER-001',
+                email: 'production@dangote-cement.cm',
+                password: 'prod123',
+                name: 'Emmanuel Biya',
+                role: 'manager',
+                company: 'Dangote Cement Cameroon',
+                location: 'Douala',
+                createdAt: '2024-01-20T10:30:00.000Z',
+                lastLogin: '2025-07-24T12:20:00.000Z'
+            },
+            {
+                id: 'USER-OP-001',
+                email: 'operateur@dangote-cement.cm',
+                password: 'oper123',
+                name: 'Célestine Ngouma',
+                role: 'operator',
+                company: 'Dangote Cement Cameroon',
+                location: 'Douala',
+                createdAt: '2024-03-10T14:00:00.000Z',
+                lastLogin: '2025-07-23T16:45:00.000Z'
+            },
+            {
+                id: 'USER-TECH-002',
+                email: 'kiln-tech@dangote-cement.cm',
+                password: 'kiln123',
+                name: 'Jean-Baptiste Fouda',
+                role: 'technician',
+                company: 'Dangote Cement Cameroon',
+                location: 'Douala',
+                createdAt: '2024-04-05T11:20:00.000Z',
+                lastLogin: '2025-07-24T09:15:00.000Z'
+            }
+        ];
+
+        function log(message) {
+            document.getElementById('result').innerHTML += message + '<br>';
+        }
+
+        function clearLog() {
+            document.getElementById('result').innerHTML = '';
+        }
+
+        function initializeData() {
+            clearLog();
+            
+            // Créer les utilisateurs (sans les mots de passe)
+            const users = demoUsers.map(user => ({
+                id: user.id,
+                email: user.email,
+                name: user.name,
+                role: user.role,
+                company: user.company,
+                location: user.location,
+                createdAt: user.createdAt,
+                lastLogin: user.lastLogin
+            }));
+            localStorage.setItem('gmao_users', JSON.stringify(users));
+
+            // Créer les mots de passe
+            const passwords = {};
+            demoUsers.forEach(user => {
+                passwords[user.id] = user.password;
+            });
+            localStorage.setItem('gmao_passwords', JSON.stringify(passwords));
+
+            log('✅ Données initialisées avec succès !');
+            log(`📊 ${users.length} utilisateurs créés`);
+            log('💡 Vous pouvez maintenant tester les connexions');
+        }
+
+        function testLogin(email, password) {
+            clearLog();
+            log(`🔍 Test de connexion pour: ${email}`);
+            
+            // Récupérer les utilisateurs stockés
+            const storedUsers = localStorage.getItem('gmao_users');
+            if (!storedUsers) {
+                log('❌ Aucun utilisateur trouvé. Initialisez d\'abord les données.');
+                return;
+            }
+            
+            const users = JSON.parse(storedUsers);
+            const user = users.find(u => u.email === email);
+            
+            if (!user) {
+                log('❌ Utilisateur non trouvé');
+                return;
+            }
+            
+            log(`👤 Utilisateur trouvé: ${user.name} (${user.role})`);
+            
+            // Vérifier le mot de passe
+            const storedPasswords = localStorage.getItem('gmao_passwords');
+            if (!storedPasswords) {
+                log('❌ Aucun mot de passe stocké');
+                return;
+            }
+            
+            const passwords = JSON.parse(storedPasswords);
+            if (passwords[user.id] !== password) {
+                log('❌ Mot de passe incorrect');
+                log(`💡 Attendu: '${passwords[user.id]}', Reçu: '${password}'`);
+                return;
+            }
+            
+            log('✅ Connexion réussie !');
+            log(`👋 Bienvenue ${user.name}`);
+            log(`🏢 ${user.company} - ${user.location}`);
+            log(`👔 Rôle: ${user.role}`);
+        }
+
+        function clearData() {
+            localStorage.removeItem('gmao_users');
+            localStorage.removeItem('gmao_passwords');
+            localStorage.removeItem('gmao_user');
+            clearLog();
+            log('🗑️ Toutes les données ont été effacées');
+        }
+
+        function showStoredData() {
+            clearLog();
+            log('📋 Données stockées dans localStorage:');
+            
+            const users = localStorage.getItem('gmao_users');
+            const passwords = localStorage.getItem('gmao_passwords');
+            const currentUser = localStorage.getItem('gmao_user');
+            
+            if (users) {
+                const userList = JSON.parse(users);
+                log(`👥 Utilisateurs (${userList.length}):`);
+                userList.forEach(user => {
+                    log(`  - ${user.email} (${user.name}, ${user.role})`);
+                });
+            } else {
+                log('❌ Aucun utilisateur stocké');
+            }
+            
+            if (passwords) {
+                const passwordList = JSON.parse(passwords);
+                log(`🔑 Mots de passe (${Object.keys(passwordList).length}):`);
+                Object.entries(passwordList).forEach(([id, pass]) => {
+                    const user = users ? JSON.parse(users).find(u => u.id === id) : null;
+                    log(`  - ${user ? user.email : id}: ${pass}`);
+                });
+            } else {
+                log('❌ Aucun mot de passe stocké');
+            }
+            
+            if (currentUser) {
+                const current = JSON.parse(currentUser);
+                log(`🔓 Utilisateur connecté: ${current.name} (${current.email})`);
+            } else {
+                log('🔒 Aucun utilisateur connecté');
+            }
+        }
+    </script>
+</body>
+</html>
